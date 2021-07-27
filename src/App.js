@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import DataFetcher from './fetch_data.js';
-import {dateBuilder, timeParser,manageSearchBox, manageMainWeatherIcon, leftColumnBuilder, rightColumnBuilder, manageBackgroundImage} from './helper_functions.js';
+import {dateBuilder,forecastBuilder, timeParser,manageSearchBox, manageWeatherIcon, leftColumnBuilder, rightColumnBuilder, manageBackgroundImage} from './helper_functions.js';
 import images from './images.js';
 
 function App() {
 
   const { weather, forecastWeather, search, cityName, setCityName } = DataFetcher();
-
+  {console.log(forecastWeather)}
   return (
     <div className={manageBackgroundImage(weather)}>
       <main>
@@ -27,7 +27,7 @@ function App() {
                 <div className="real_feel">
                   <span>Feels Like {Math.round(weather.main.feels_like)} °C</span>
                 </div>
-                 <img src={manageMainWeatherIcon(weather, images)} alt="main_icon"></img>
+                 <img src={manageWeatherIcon(weather, images)} alt="main_icon"></img>
                 <div className="weather_state">{weather.weather[0].main}</div>
               </div>
               {/* the weather information rectangle (right) */}
@@ -46,7 +46,7 @@ function App() {
               </div>
             </div>
             <div className="forecast_container">
-              {console.log(forecastWeather)}
+              {forecastBuilder(forecastWeather, images)}
             </div>
           </div>
         ) : ('')}
