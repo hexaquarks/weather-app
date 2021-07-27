@@ -28,18 +28,19 @@ body {
 main {
   min-height: 100vh;
   background-image: linear-gradient(to bottom, rgba(0,0,0, 0.2), rgba(0,0 ,0, 0.75));
-  padding: 25px;
+  /* padding: 25px; */
+  padding-top: 25px;
 }
 
-.search-box {
+.search_box {
   width: 100%;
   margin: 0 0 75px;
 }
 
 /* NODE space between .search-box and .search-bar here is important */
-.search-box .search-bar { 
+.search_box .search_bar { 
   display: block;
-  width: 100%;
+  width: 90%;
   padding: 15px;
 
   appearance:  none;
@@ -50,6 +51,7 @@ main {
   background-color: rgba(255,255,255,0.5);
   border-radius: 0px 0px 16px 16px;
   margin-top: -25px;
+  margin-left: 5%;
 
   box-shadow: 0px 5px rgba(0,0,0, 0.2);
 
@@ -61,63 +63,67 @@ main {
 
 
 /* NOTE focus is for when it's clicked */
-.search-box .search-bar:focus {
+.search_box .search_bar:focus {
   background-color: rgba(255,255,255,0.75);
 }
 
-.location-box .location {
+.location_box .location {
   color: #fff;
   font-size: 32px;
   font-weight: 500;
   text-align: center;
   text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
+
 }
 
-.location-box .date {
+.location_box .date {
   color: #fff;
   font-size: 20px;
   font-weight: 300;
   font-style: italic;
   text-align: center;
   text-shadow: 2px 2px rgba(50, 50, 70, 0.5);
+
+  margin-bottom: 2%;
 }
 
-.main-container {
+.main_container {
   background-color: rgba(255,255,255,0.2);
-  border-radius: 16px;
+  border-radius: 16px 16px 0px 0px;
   /* padding: 0px 0px 0px 0px;
   margin: 20px auto; */
-  width: 60vw;
-  height: 40vh;
-  position: relative;
-  left: 15vw;
+  width: 500px;
+  height: 240px;
   display: flex;
+  margin-left:auto;
+  margin-right: auto;
 
   min-width: min-content;
+  min-height: fit-content;
 }
 
-.weather-box {
-  display: block;
-  text-align: left;
+.weather_box {
+  display: grid;
   background-color: rgba(255,255,255,0.2);
-  width: 35%;
+  width:  35%;
   height: inherit;
   box-shadow: 3px 6px rgba(0,0,0, 0.2);
   border-radius: 16px;
-  padding: 15px 15px 100px 15px;
+  padding: 15px 15px 50px 15px;
 
-  min-width: min-content;
-  max-width: min-content;
+  /* min-width: min-content;
+  max-width: min-content; */
 }
 
-.weather-box img[alt="main_icon"] {
+.weather_box img[alt="main_icon"] {
   position:relative;
   left: 30%;
 }
 
-.weather-box .temp{
+.weather_box .temp{
   position: relative;
-  display: inline-block;
+  display: block;
+  width: 4ch; 
   
 
   color: #fff;
@@ -128,23 +134,29 @@ main {
   text-align: center;
 }
 /* 
-.weather-box .weather {
+.weather_box .weather {
   color: #fff;
   font-size: 48px;
   font-weight: 700;
   text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
 } */
-.weather {
-  position: relative;
-  color: #fff;
+.weather_box .weather_state {
+  color: rgb(27, 27, 27);
   font-size: 24px;
-  font-weight: 700;
-  font-style: oblique;
-  text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
-  top: 25%;
-  left: 22%;
+  font-weight: 600;
+  text-shadow: 0px 15px rgba(63, 63, 68, 0.5);
+  text-align: center;
+  margin-top:10px;
 }
  
+.weather_box .real_feel {
+  text-align: center;
+  font-size: 18px;
+  color:rgb(27, 27, 27);
+
+  font-weight: 600;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 .weather_information {
   align-items:stretch;
 }
@@ -153,24 +165,25 @@ main {
   float: left;
   position:absolute;
   text-align: left;
-  padding-left: 10px;
-  padding-top: 5px;
-  line-height: 25px;
+  padding-left: 15px;
+  padding-top: 15px;
+  line-height: 21px;
 
   font-family: 'Consolas';
   font-size: 18px;
   font-weight: 700;
   text-transform: capitalize;
+  color:black;
+  
+  min-height: fit-content;
 }
 
 .weather_information .right_column {
-  float: right;
-  position: absolute;
   text-align: right;
-  right: 10px;
-  padding-top: 8px;
-  line-height: 25px;
+  margin-right: 20px;
+  padding-top: 15px;
 
+  line-height: 21px;
   font-family: 'Courier New';
   font-size: 17px;
 }
@@ -183,4 +196,19 @@ table {
   width: 100%;
   color:rgba(255, 255, 255, 0.836);
   height: 20px;
+}
+
+hr {
+  margin-top: 13px;
+  width: 85%;
+}
+
+.forecast_container { 
+  width: 500px;
+  height: 100px;
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 0px 0px 16px 16px;
+
+  margin-left: auto;
+  margin-right: auto;
 }

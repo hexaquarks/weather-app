@@ -30,10 +30,10 @@ export const timeParser = (weather) => {
 
 export const manageSearchBox = (search, cityName, setCityName) => {
     return (
-        <div className="search-box">
+        <div className="search_box">
             <input
                 type="text"
-                className="search-bar"
+                className="search_bar"
                 placeholder="Search..."
                 onChange={e => setCityName(e.target.value)}
                 value={cityName} //cityName
