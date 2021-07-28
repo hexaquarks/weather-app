@@ -47,9 +47,9 @@ export const manageBackgroundImage = (weather) => {
     if (typeof weather.main != 'undefined') {
         const temperature = weather.main.temp;
 
-        if (temperature > 16) return 'app warm';
-        else if (temperature > 0 && temperature <= 16) return 'app normal';
-        else if (temperature <= 0) return 'app cold';
+        if (temperature > 16) return 'weather_box warm';
+        else if (temperature > 0 && temperature <= 16) return 'weather_box normal';
+        else if (temperature <= 0) return 'weather_box cold';
     } else {
         return 'app normal';
     }
@@ -105,8 +105,8 @@ export const rightColumnBuilder = (weather) => {
                 <tr>{weather.main.temp_min.toFixed(0)} °C</tr>
                 <tr>{weather.main.temp_max.toFixed(0)} °C</tr>
                 <tr><td><br /></td></tr>
-                <tr>{timeParser(weather)[0].slice(0, timeParser(weather)[0].length - 6) + timeParser(weather)[0].slice(timeParser(weather)[0].length - 3, timeParser(weather)[0].length)}</tr>
-                <tr>{timeParser(weather)[1].slice(0, timeParser(weather)[1].length - 6) + timeParser(weather)[1].slice(timeParser(weather)[1].length - 3, timeParser(weather)[1].length)}</tr>
+                <tr>{timeParser(weather)[0].slice(0, timeParser(weather)[0].length - 8) + " " + timeParser(weather)[0].slice(timeParser(weather)[0].length - 4, timeParser(weather)[0].length)}</tr>
+                <tr>{timeParser(weather)[1].slice(0, timeParser(weather)[1].length - 8) + " " + timeParser(weather)[1].slice(timeParser(weather)[1].length - 4, timeParser(weather)[1].length)}</tr>
                 {/* 10 elements */}
             </tbody>
         </table>

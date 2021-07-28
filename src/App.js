@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import DataFetcher from './fetch_data.js';
-import {dateBuilder,forecastBuilder, timeParser,manageSearchBox, manageWeatherIcon, leftColumnBuilder, rightColumnBuilder, manageBackgroundImage} from './helper_functions.js';
+import { dateBuilder, forecastBuilder, timeParser, manageSearchBox, manageWeatherIcon, leftColumnBuilder, rightColumnBuilder, manageBackgroundImage } from './helper_functions.js';
 import images from './images.js';
 
 function App() {
 
   const { weather, forecastWeather, search, cityName, setCityName } = DataFetcher();
-  {console.log(forecastWeather)}
+  { console.log(forecastWeather) }
   return (
-    <div className={manageBackgroundImage(weather)}>
+    <div className="app">
       <main>
-       {manageSearchBox(search,cityName, setCityName)}
+        {manageSearchBox(search, cityName, setCityName)}
         {(typeof weather.main != "undefined") ? (
           <div>
             <div className="location_box">
@@ -20,14 +20,19 @@ function App() {
             {/* the main contianer box + rectangle */}
             <div className="main_container">
               {/* the weather box (left) */}
-              <div className="weather_box">
-                <div className="temp">
-                  {Math.round(weather.main.temp)}°C
+              <div className={manageBackgroundImage(weather)}>
+                <div className="top">
+                  <div className="temp">
+                    {Math.round(weather.main.temp)}
+                  </div>
+                  <button class="celsius">°C</button>
+                  <span id="vertical_bar">|</span>
+                  <button class="farenheit">°F</button>
                 </div>
                 <div className="real_feel">
-                  <span>Feels Like {Math.round(weather.main.feels_like)} °C</span>
+                  <span>Feels Like {Math.round(weather.main.feels_like)}°C</span>
                 </div>
-                 <img src={manageWeatherIcon(weather, images)} alt="main_icon"></img>
+                <img src={manageWeatherIcon(weather, images)} alt="main_icon"></img>
                 <div className="weather_state">{weather.weather[0].main}</div>
               </div>
               {/* the weather information rectangle (right) */}
