@@ -18,16 +18,6 @@ function DataFetcher() {
     const search = event => {
         if (event.key === "Enter") {
 
-            // geoparsing api
-            // fetch(`https://geocode.xyz/?locate=${cityName}&geoit=json&auth=${geoKey}`)
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         setLatLong(data);
-            //         // setCityName('');
-            //         console.log(data);
-            //     });
-
-
             fetch(`${api.base}weather?q=${cityName}&units=metric&APPID=${api.key}`)
                 .then(response => response.json())
                 .then(data => {
@@ -45,16 +35,6 @@ function DataFetcher() {
                     setForecastWeather(r);
                     console.log(r);
                 });
-
-            // fetch(`${api.base}onecall?lat=0.1&lon=${weather.coord.lon}&units=metric&exclude=${excludes}&appid=${api.key}`)
-            // .then(response => response.json())
-            // .then(data => {
-            //     setForecastWeather(data);
-            //     // setCityName('');
-            //     console.log(data);
-            // });
-
-            // console.log(weather + " here")
         }
     }
 
