@@ -158,9 +158,17 @@ const CustomTooltip = ({ active, payload, label }) => {
     if (active) {
       return (
         <div className="custom_tooltip">
-          <p className="label">{`${label} : ${payload[0].value}`}</p>
-          <img src={triangle} alt="triangle_icon" /> 
-          <img src={triangle_blue} alt="triangle_icon_blue" /> 
+          <p className="toolBox_dayLabel">{`${label}`}
+          </p> 
+          <img src={triangle} alt="triangle_icon" />
+          <span className="toolBox_temp"> 
+            {`${payload[0].value[0]}`} °C
+          </span>
+          <br></br>
+          <img src={triangle_blue} alt="triangle_icon_blue" />
+          <span className="toolBox_temp"> 
+            {`${payload[0].value[1]}`} °C
+          </span>          
           <p className="intro"></p>
         </div>
       );
@@ -180,8 +188,8 @@ export const graphBuilder = (forecastWeather) => {
                 Math.round(forecastWeather[0].temp.max),
                 Math.round(forecastWeather[0].temp.min),
             ],
-            temp_max: Math.round(forecastWeather[0].temp.max),
-            temp_min: Math.round(forecastWeather[0].temp.min)
+            temp_max: Math.round(forecastWeather[0].temp.max)+ '°',
+            temp_min: Math.round(forecastWeather[0].temp.min)+ '°'
         }
     ];
 
@@ -197,8 +205,8 @@ export const graphBuilder = (forecastWeather) => {
                     Math.round(forecastWeather[i].temp.max),
                     Math.round(forecastWeather[i].temp.min),
                 ],
-                temp_max: Math.round(forecastWeather[i].temp.max),
-                temp_min: Math.round(forecastWeather[i].temp.min)
+                temp_max: Math.round(forecastWeather[i].temp.max)+ '°',
+                temp_min: Math.round(forecastWeather[i].temp.min)+ '°'
             }
         );
         dayIncrement.setDate(dayIncrement.getDate() + 1);
@@ -209,7 +217,7 @@ export const graphBuilder = (forecastWeather) => {
           height={250}
           data={data}
           margin={{
-            top: 25, bottom: 5,right:20, left: 10
+            top: 50, bottom: 5,right:20, left: 10
           }}
         >
          
@@ -218,10 +226,9 @@ export const graphBuilder = (forecastWeather) => {
             cursor={{fill: '#2e2d2d'}}
             content={<CustomTooltip />}
           />
-          <Legend />
 
           {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
-          <Bar dataKey="temp" stroke="#82ca9d" fillOpacity={0.12} fill="yellow" >
+          <Bar dataKey="temp" stroke="#82ca9d" fillOpacity={0.52} fill="#ffff33" >
               <LabelList dataKey="temp_min" position="top" offset={8} stroke="white"/> 
               <LabelList dataKey="temp_max" position="bottom" offset={8} stroke="white"/> 
           </Bar>
