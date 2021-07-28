@@ -1,3 +1,7 @@
+import triangle from "./assets/triangle.png"
+import triangle_blue from "./assets/triangle_blue.png"
+import { BarChart, Bar, LineChart,AreaChart,Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
+import { Chart, LineAdvance} from 'bizcharts';
 
 export const dateBuilder = (d) => {
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -82,8 +86,8 @@ export const leftColumnBuilder = () => {
                 <tr>HUMIDITY</tr>
                 <tr>VISIBILITY</tr>
                 <tr><td><br /></td></tr>
-                <tr>MIN. TEMP.</tr>
                 <tr>MAX. TEMP.</tr>
+                <tr>MIN. TEMP.</tr>
                 <tr><td><br /></td></tr>
                 <tr>SUN RISE</tr>
                 <tr>SUN SET</tr>
@@ -102,8 +106,8 @@ export const rightColumnBuilder = (weather) => {
                 <tr>{weather.main.humidity} %</tr>
                 <tr>{weather.visibility / 1000} Km</tr>
                 <tr><td><br /></td></tr>
-                <tr>{weather.main.temp_min.toFixed(0)} °C</tr>
                 <tr>{weather.main.temp_max.toFixed(0)} °C</tr>
+                <tr>{weather.main.temp_min.toFixed(0)} °C</tr>
                 <tr><td><br /></td></tr>
                 <tr>{timeParser(weather)[0].slice(0, timeParser(weather)[0].length - 8) + " " + timeParser(weather)[0].slice(timeParser(weather)[0].length - 4, timeParser(weather)[0].length)}</tr>
                 <tr>{timeParser(weather)[1].slice(0, timeParser(weather)[1].length - 8) + " " + timeParser(weather)[1].slice(timeParser(weather)[1].length - 4, timeParser(weather)[1].length)}</tr>
@@ -148,4 +152,80 @@ export const forecastBuilder = (forecastWeather, images) => {
         )
     }
     return temp;
+}
+
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active) {
+      return (
+        <div className="custom_tooltip">
+          <p className="label">{`${label} : ${payload[0].value}`}</p>
+          <img src={triangle} alt="triangle_icon" /> 
+          <img src={triangle_blue} alt="triangle_icon_blue" /> 
+          <p className="intro"></p>
+        </div>
+      );
+    }
+  
+    return null;
+  };
+
+export const graphBuilder = (forecastWeather) => {
+    if (forecastWeather.daily === undefined) return ' ';
+    forecastWeather = forecastWeather.daily;
+
+    const data = [ 
+        {
+            day : 'Today',
+            temp: [
+                Math.round(forecastWeather[0].temp.max),
+                Math.round(forecastWeather[0].temp.min),
+            ],
+            temp_max: Math.round(forecastWeather[0].temp.max),
+            temp_min: Math.round(forecastWeather[0].temp.min)
+        }
+    ];
+
+    var dayIncrement = new Date();
+    dayIncrement.setDate(dayIncrement.getDate() + 1);
+
+    for (var i = 1; i < 5; i++) {
+        data.push(
+            {
+                day: dateBuilder(dayIncrement).substr(
+                    0, dateBuilder(dayIncrement).indexOf(' ')),
+                temp: [
+                    Math.round(forecastWeather[i].temp.max),
+                    Math.round(forecastWeather[i].temp.min),
+                ],
+                temp_max: Math.round(forecastWeather[i].temp.max),
+                temp_min: Math.round(forecastWeather[i].temp.min)
+            }
+        );
+        dayIncrement.setDate(dayIncrement.getDate() + 1);
+    }
+    return (
+        <BarChart
+          width={500}
+          height={250}
+          data={data}
+          margin={{
+            top: 25, bottom: 5,right:20, left: 10
+          }}
+        >
+         
+          <XAxis dataKey="day" />
+          <Tooltip 
+            cursor={{fill: '#2e2d2d'}}
+            content={<CustomTooltip />}
+          />
+          <Legend />
+
+          {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
+          <Bar dataKey="temp" stroke="#82ca9d" fillOpacity={0.12} fill="yellow" >
+              <LabelList dataKey="temp_min" position="top" offset={8} stroke="white"/> 
+              <LabelList dataKey="temp_max" position="bottom" offset={8} stroke="white"/> 
+          </Bar>
+        </BarChart>
+
+    )
 }

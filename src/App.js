@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import DataFetcher from './fetch_data.js';
-import { dateBuilder, forecastBuilder, timeParser, manageSearchBox, manageWeatherIcon, leftColumnBuilder, rightColumnBuilder, manageBackgroundImage } from './helper_functions.js';
+import { dateBuilder, graphBuilder, forecastBuilder, timeParser, manageSearchBox, manageWeatherIcon, leftColumnBuilder, rightColumnBuilder, manageBackgroundImage } from './helper_functions.js';
 import images from './images.js';
 
-function App() {
+import { Chart, LineAdvance} from 'bizcharts';
 
+function App() {
+//   const data = [ 
+//     {
+//         day : 'Today',
+//         type: 'min',
+//         temp: 10
+//     },
+//     {
+//         day : 'Today',
+//         type: 'max',
+//         temp: 20
+//     }
+// ];
   const { weather, forecastWeather, search, cityName, setCityName } = DataFetcher();
   { console.log(forecastWeather) }
   return (
@@ -52,6 +65,9 @@ function App() {
             </div>
             <div className="forecast_container">
               {forecastBuilder(forecastWeather, images)}
+            </div>
+            <div className="forecast_graph">
+              {graphBuilder(forecastWeather)}
             </div>
           </div>
         ) : ('')}
