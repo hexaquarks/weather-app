@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import DataFetcher from './fetch_data.js';
-import { dateBuilder, graphBuilder, forecastBuilder, timeParser, manageSearchBox, manageWeatherIcon, leftColumnBuilder, rightColumnBuilder, manageBackgroundImage } from './helper_functions.js';
+import { changeGraph, dateBuilder, graphBuilderTemperature,graphBuilderPrecipitation, forecastBuilder, timeParser, manageSearchBox, manageWeatherIcon, leftColumnBuilder, rightColumnBuilder, manageBackgroundImage } from './helper_functions.js';
 import images from './images.js';
 
-import { Chart, LineAdvance} from 'bizcharts';
+import { Chart, LineAdvance } from 'bizcharts';
+let graphState = "temp";
 
 function App() {
-//   const data = [ 
-//     {
-//         day : 'Today',
-//         type: 'min',
-//         temp: 10
-//     },
-//     {
-//         day : 'Today',
-//         type: 'max',
-//         temp: 20
-//     }
-// ];
+
   const { weather, forecastWeather, search, cityName, setCityName } = DataFetcher();
+  const [graphType, setGraphType] = useState("temp")
+
+  const changeGraph = () => {
+    graphType === "temp" ? setGraphType("precipitations") : setGraphType("temp")
+}
+
   { console.log(forecastWeather) }
   return (
     <div className="app">
@@ -53,7 +49,7 @@ function App() {
                 <div className="left_column">
                   <tr>
                     {leftColumnBuilder(weather)}
-                    <hr></hr>
+                    {/* <hr></hr> */}
                   </tr>
                 </div>
                 <div className="right_column">
@@ -67,7 +63,9 @@ function App() {
               {forecastBuilder(forecastWeather, images)}
             </div>
             <div className="forecast_graph">
-              {graphBuilder(forecastWeather)}
+              {/* {graphBuilderTemperature(forecastWeather)} */}
+              {graphType === "temp"? graphBuilderTemperature(forecastWeather) : graphBuilderPrecipitation(forecastWeather) }
+              <button className="forecast_graph_reload" onClick={() => changeGraph()}></button>
             </div>
           </div>
         ) : ('')}

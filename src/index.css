@@ -329,3 +329,24 @@ hr {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+.forecast_graph_reload {
+  background: url('./assets/reload_precipitation_icon.png');
+  align-items: center;
+  background-size: cover;
+  /* border-spacing: 3px; */
+  /* border: 1px solid gray; */
+  border: none;
+  background-position-x: 0px;
+  position:relative;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  bottom:95%;
+  left: 94%;
+
+}
+
+.forecast_graph_reload:hover {
+  filter: drop-shadow(0px 0px 6px rgb(126, 153, 64));
+}
+

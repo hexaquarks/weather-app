@@ -177,7 +177,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return null;
   };
 
-export const graphBuilder = (forecastWeather) => {
+export const graphBuilderTemperature = (forecastWeather) => {
     if (forecastWeather.daily === undefined) return ' ';
     forecastWeather = forecastWeather.daily;
 
@@ -220,19 +220,91 @@ export const graphBuilder = (forecastWeather) => {
             top: 50, bottom: 5,right:20, left: 10
           }}
         >
-         
-          <XAxis dataKey="day" />
+         <defs>
+          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="yellow" stopOpacity={0.5}/>
+            <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1}/>
+          </linearGradient>
+        </defs>
+          <XAxis dataKey="day" stroke="gray"/>
           <Tooltip 
             cursor={{fill: '#2e2d2d'}}
             content={<CustomTooltip />}
           />
 
           {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
-          <Bar dataKey="temp" stroke="#82ca9d" fillOpacity={0.52} fill="#ffff33" >
-              <LabelList dataKey="temp_min" position="top" offset={8} stroke="white"/> 
+          <Bar dataKey="temp" stroke="gray" fillOpacity={0.52} fill="url(#colorUv)" >
+              <LabelList dataKey="temp_min" position="top" offset={8} strokeWidth={1} stroke="white"/> 
               <LabelList dataKey="temp_max" position="bottom" offset={8} stroke="white"/> 
           </Bar>
         </BarChart>
 
     )
+}
+
+export const graphBuilderPrecipitation = (forecastWeather) => {
+    if (forecastWeather.daily === undefined) return ' ';
+    forecastWeather = forecastWeather.daily;
+
+    const data = [ 
+        {
+            day : 'Today',
+            pop: forecastWeather[0].pop * 100,
+            pop_percent : forecastWeather[0].pop * 100 + '%'
+        }
+    ];
+
+    var dayIncrement = new Date();
+    dayIncrement.setDate(dayIncrement.getDate() + 1);
+
+    for (var i = 1; i < 5; i++) {
+        data.push(
+            {
+                day: dateBuilder(dayIncrement).substr(
+                    0, dateBuilder(dayIncrement).indexOf(' ')),
+                pop: forecastWeather[i].pop * 100,
+                pop_percent : forecastWeather[i].pop * 100 + '%'
+            }
+        );
+        dayIncrement.setDate(dayIncrement.getDate() + 1);
+    }
+
+    return (
+        <BarChart
+          width={500}
+          height={250}
+          data={data}
+          margin={{
+            top: 50, bottom: 5,right:20, left: 10
+          }}
+        >
+         <defs>
+          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="blue" stopOpacity={0.5}/>
+            <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1}/>
+          </linearGradient>
+        </defs>
+          <XAxis dataKey="day" stroke="gray"/>
+          <Tooltip 
+            cursor={{fill: '#2e2d2d'}}
+            content={<CustomTooltip />}
+          />
+
+          {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
+          <Bar dataKey="pop" stroke="#82ca9d" fillOpacity={0.52} fill="url(#colorUv)" >
+              <LabelList dataKey="pop_percent" position="top" offset={8} stroke="white"/> 
+          </Bar>
+        </BarChart>
+    )
+}
+
+export const changeGraph = (forecastWeather, graphState) => {
+    if(graphState === "temp") {
+        graphState = "precipitation"; 
+        return (graphBuilderPrecipitation(forecastWeather));
+    }else {
+        graphState = "temp"; 
+        console.log("here")
+        return (graphBuilderTemperature(forecastWeather));
+    }
 }
