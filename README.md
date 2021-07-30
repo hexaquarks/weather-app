@@ -10,7 +10,7 @@ My primary goals with this project are to:
 
 ### Current State Example
 <p align="center">
-   <img src="https://i.gyazo.com/7016e6eb5224e667fc7e3c481fd2979f.gif" width="450" height="400" />
+   <img src="https://i.gyazo.com/90a4f5ee5c93f5002de981e61ec615ca.gif" width="450" height="625" />
 </p>
 
 
