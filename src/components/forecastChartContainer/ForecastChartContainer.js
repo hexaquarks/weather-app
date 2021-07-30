@@ -1,0 +1,175 @@
+import { useState } from 'react';
+import { dateBuilder } from '../../helper_functions.js';
+import PropTypes from 'prop-types';
+
+import triangle from '../../assets/triangle.png'
+import triangle_blue from "../../assets/triangle_blue.png"
+import { BarChart, Bar, LineChart, AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
+
+import styles from './ForecastChartContainer.module.css';
+
+const CustomTooltip = ({ active, payload, label }) => {
+    if (active) {
+        return (
+            <div className={styles.custom_tooltip}>
+                <p className={styles.toolBox_dayLabel}>{`${label}`}
+                </p>
+                <img src={triangle} id={styles.triangle_icon}/>
+                <span className={styles.toolBox_temp}>
+                    {`${payload[0].value[0]}`} °C
+                </span>
+                <br></br>
+                <img src={triangle_blue} id={styles.triangle_icon_blue} />
+                <span className={styles.toolBox_temp} >
+                    {`${payload[0].value[1]}`} °C
+                </span>
+                <p className={styles.intro} ></p>
+            </div>
+        );
+    }
+
+    return null;
+};
+
+export const graphBuilderTemperature = (forecastWeather) => {
+    if (forecastWeather.daily === undefined) return ' ';
+    forecastWeather = forecastWeather.daily;
+
+    const data = [
+        {
+            day: 'Today',
+            temp: [
+                Math.round(forecastWeather[0].temp.max),
+                Math.round(forecastWeather[0].temp.min),
+            ],
+            temp_max: Math.round(forecastWeather[0].temp.max) + '°',
+            temp_min: Math.round(forecastWeather[0].temp.min) + '°'
+        }
+    ];
+
+    var dayIncrement = new Date();
+    dayIncrement.setDate(dayIncrement.getDate() + 1);
+
+    for (var i = 1; i < 5; i++) {
+        data.push(
+            {
+                day: dateBuilder(dayIncrement).substr(
+                    0, dateBuilder(dayIncrement).indexOf(' ')),
+                temp: [
+                    Math.round(forecastWeather[i].temp.max),
+                    Math.round(forecastWeather[i].temp.min),
+                ],
+                temp_max: Math.round(forecastWeather[i].temp.max) + '°',
+                temp_min: Math.round(forecastWeather[i].temp.min) + '°'
+            }
+        );
+        dayIncrement.setDate(dayIncrement.getDate() + 1);
+    }
+    return (
+        <BarChart
+            width={500}
+            height={250}
+            data={data}
+            margin={{
+                top: 50, bottom: 5, right: 20, left: 10
+            }}
+        >
+            <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="yellow" stopOpacity={0.5} />
+                    <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
+                </linearGradient>
+            </defs>
+            <XAxis dataKey="day" stroke="gray" />
+            <Tooltip
+                cursor={{ fill: '#2e2d2d' }}
+                content={<CustomTooltip />}
+            />
+
+            {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
+            <Bar dataKey="temp" stroke="gray" fillOpacity={0.52} fill="url(#colorUv)" >
+                <LabelList dataKey="temp_min" position="top" offset={8} strokeWidth={1} stroke="white" />
+                <LabelList dataKey="temp_max" position="bottom" offset={8} stroke="white" />
+            </Bar>
+        </BarChart>
+
+    )
+}
+
+export const graphBuilderPrecipitation = (forecastWeather) => {
+    if (forecastWeather.daily === undefined) return ' ';
+    forecastWeather = forecastWeather.daily;
+
+    const data = [
+        {
+            day: 'Today',
+            pop: forecastWeather[0].pop * 100,
+            pop_percent: forecastWeather[0].pop * 100 + '%'
+        }
+    ];
+
+    var dayIncrement = new Date();
+    dayIncrement.setDate(dayIncrement.getDate() + 1);
+
+    for (var i = 1; i < 5; i++) {
+        data.push(
+            {
+                day: dateBuilder(dayIncrement).substr(
+                    0, dateBuilder(dayIncrement).indexOf(' ')),
+                pop: forecastWeather[i].pop * 100,
+                pop_percent: forecastWeather[i].pop * 100 + '%'
+            }
+        );
+        dayIncrement.setDate(dayIncrement.getDate() + 1);
+    }
+
+    return (
+        <BarChart
+            width={500}
+            height={250}
+            data={data}
+            margin={{
+                top: 50, bottom: 5, right: 20, left: 10
+            }}
+        >
+            <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="blue" stopOpacity={0.5} />
+                    <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
+                </linearGradient>
+            </defs>
+            <XAxis dataKey="day" stroke="gray" />
+            <Tooltip
+                cursor={{ fill: '#2e2d2d' }}
+                content={<CustomTooltip />}
+            />
+
+            {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
+            <Bar dataKey="pop" stroke="#82ca9d" fillOpacity={0.52} fill="url(#colorUv)" >
+                <LabelList dataKey="pop_percent" position="top" offset={8} stroke="white" />
+            </Bar>
+        </BarChart>
+    )
+}
+
+const ForecastChartContainer = ({ forecastWeather }) => {
+    const [graphType, setGraphType] = useState("temp");
+
+    const changeGraph = () => {
+        graphType === "temp" ? setGraphType("precipitations") : setGraphType("temp")
+    }
+
+    return (
+        <div className={styles.forecast_graph} >
+            {graphType === "temp" ? graphBuilderTemperature(forecastWeather) : graphBuilderPrecipitation(forecastWeather)}
+            <button className={styles.forecast_graph_reload} onClick={() => changeGraph()}></button>
+        </div>
+    )
+
+}
+
+ForecastChartContainer.propTypes = {
+    forecastWeather: PropTypes.object.isRequired,
+};
+
+export default ForecastChartContainer;

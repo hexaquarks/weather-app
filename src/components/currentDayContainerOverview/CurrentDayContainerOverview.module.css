@@ -1,0 +1,86 @@
+.weather_box {
+    display: grid;
+    width: 40%;
+    height: inherit;
+    box-shadow: 3px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding: 15px 5px 50px 10px;
+    /* min-width: min-content;
+    max-width: min-content; */
+}
+
+.top {
+    display: flex;
+    color: white;
+}
+
+.temp {
+    position: relative;
+    width: 2ch;
+    color: rgba(255, 255, 255, 1.0);
+    font-size: 62px;
+    font-weight: 500;
+    text-shadow: 1px 1px rgba(50, 50, 70, 0.5);
+    text-align: center;
+    margin-right: 5px;
+}
+
+.celsius, .farenheit {
+    border: none;
+    background-color: inherit;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.celsius:hover, .farenheit:hover {
+    filter: drop-shadow(0px 0px 6px rgb(121, 119, 119));
+}
+
+#vertical_bar {
+    margin-top: 7px;
+    margin-left: 5px;
+    margin-right: 3px;
+    font-size: 21px;
+}
+
+.cold {
+    background-image: url('../../assets/cold.png');
+    transition: 0.6s ease-out;
+}
+
+.warm {
+    background-image: url('../../assets/warm.png');
+    transition: 0.6s ease-out;
+}
+
+normal {
+    background-image: url('../../assets/normal.png');
+    transition: 0.6s ease-out;
+}
+
+.main_icon {
+    position: relative;
+    margin-top: 15px;
+    left: 30%;
+}
+
+.weather_state {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    text-shadow: 0px 15px rgba(63, 63, 68, 0.15);
+    text-align: center;
+    margin-top: 10px;
+}
+
+.real_feel {
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    width: 14ch;
+    margin-top: 0px;
+    font-weight: 600;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

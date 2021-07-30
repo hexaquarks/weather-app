@@ -1,0 +1,36 @@
+.weather_information {
+    align-items: stretch;
+}
+
+.left_column {
+    float: left;
+    position: absolute;
+    text-align: left;
+    padding-left: 15px;
+    padding-top: 15px;
+    line-height: 21px;
+    font-family: 'Consolas';
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: black;
+    min-height: fit-content;
+}
+
+.right_column {
+    text-align: right;
+    margin-right: 20px;
+    padding-top: 15px;
+    line-height: 21px;
+    font-family: 'Courier New';
+    font-size: 17px;
+}
+
+table {
+    /* font-family: arial, sans-serif; */
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    color: white;
+    height: 20px;
+}

@@ -1,0 +1,88 @@
+
+.forecast_graph {
+    width: 500px; 
+    height: 255px; 
+    background-color: #1F1F1F;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  
+    border-radius: 0px 0px 16px 16px;
+  }
+  
+  .forecast_graph::before {
+    width: 500px;
+    height: 15px;
+    position: absolute;
+    background-color: rgb(31, 30, 30);
+    background-image: linear-gradient(to bottom, #0E0E0E, rgba(0,0 ,0, 0.3));
+    content: "";
+    margin-bottom: 140px;
+    border-radius: 0px 0px 16px 16px;
+  }
+  .custom_tooltip {
+    display:block;
+    width:fit-content;
+    height: fit-content;
+    color: white;
+    align-items: center;
+    text-align: center;
+    padding: 3px;
+  }
+  
+  .custom_tooltip::after{
+    opacity: 45%;
+    margin-top: -70px;
+    display:block;
+    background-color: rgb(0, 0, 0);
+    width: 70px;
+    height: 80px;
+    content:"";
+  
+  }
+  
+  
+ #triangle_icon {
+    width:20px;
+    height:13px;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+  
+  #triangle_icon_blue  {
+    width:20px;
+    height:13px;
+    transform: scaleY(-1);
+    margin-right: 10px;
+  }
+  
+  .toolBox_temp {
+    width:2ch;
+  }
+  
+  .toolBox_dayLabel {
+    color:white;
+    font-size: 17px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+  
+  .forecast_graph_reload {
+    background: url('../../assets/reload_precipitation_icon.png');
+    align-items: center;
+    background-size: cover;
+    /* border-spacing: 3px; */
+    /* border: 1px solid gray; */
+    border: none;
+    background-position-x: 0px;
+    position:relative;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    bottom:95%;
+    left: 94%;
+  
+  }
+  
+  .forecast_graph_reload:hover {
+    filter: drop-shadow(0px 0px 6px rgb(126, 153, 64));
+  }
