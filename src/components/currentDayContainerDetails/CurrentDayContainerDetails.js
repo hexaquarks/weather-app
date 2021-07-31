@@ -8,6 +8,7 @@ import styles from './CurrentDayContainerDetails.module.css';
 const CurrentDayContainerDetails = ({ weather }) => {
 
     const { unitState } = useContext(Context);
+    console.log(unitState + " is ")
     return (
         <div className={styles.weather_information}>
             <div className={styles.left_column}>
@@ -52,7 +53,7 @@ const rightColumnBuilder = (weather,unitState) => {
     return (
         <table>
             <tbody>
-                <tr>{weather.wind.speed} m/s</tr>
+                <tr>{weather.wind.speed} {unitState==="°C" ? "km/h" : "mph"}</tr>
                 <tr>{weather.main.pressure / 100.} kPa </tr>
                 <tr>{weather.main.humidity} %</tr>
                 <tr>{weather.visibility / 1000} Km</tr>

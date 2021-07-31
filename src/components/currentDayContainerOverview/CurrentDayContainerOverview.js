@@ -17,9 +17,16 @@ const manageBackgroundImage = (weather) => {
 }
 
 const CurrentDayContainerOverview = ({ weather }) => {  
-    const { unitState, currentCity, submitRequest } = useContext(Context); 
+    const { unitState, setUnitState } = useContext(Context); 
+    const { currentCity } = useContext(Context);
+    const { submitRequest } = useContext(Context);
     // const { submitRequest } = useContext(Context);
     // const { currentCity } = useContext(Context);
+
+    const onClick = (currentCity, unit) => {
+        submitRequest(currentCity, unit);
+        (unit === "metric") ? setUnitState("°C") : setUnitState("°F");
+    }
 
     console.log("-----: " + currentCity);
     return (
@@ -28,9 +35,9 @@ const CurrentDayContainerOverview = ({ weather }) => {
                 <div className={styles.temp}>
                     {Math.round(weather.main.temp)}
                 </div>
-                <button class={styles.celsius} onClick={() => submitRequest(currentCity, "metric")}>°C</button>
+                <button class={styles.celsius} onClick={() => onClick(currentCity, "metric")}>°C</button>
                 <span id={styles.vertical_bar}>|</span>
-                <button class={styles.farenheit} onClick={() => submitRequest(currentCity, "imperial")}>°F</button>
+                <button class={styles.farenheit} onClick={() => onClick(currentCity, "imperial")}>°F</button>
             </div>
             <div className={styles.real_feel}>
                 <span>Feels Like {Math.round(weather.main.feels_like)} {unitState} </span>

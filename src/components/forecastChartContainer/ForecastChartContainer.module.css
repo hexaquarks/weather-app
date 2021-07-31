@@ -67,12 +67,9 @@
   }
   
   .forecast_graph_reload {
-    background: url('../../assets/reload_precipitation_icon.png');
+    /* background: url('../../assets/reload_precipitation_icon.png'); */
     align-items: center;
-    background-size: cover;
-    /* border-spacing: 3px; */
-    /* border: 1px solid gray; */
-    border: none;
+
     background-position-x: 0px;
     position:relative;
     cursor: pointer;
@@ -81,6 +78,26 @@
     bottom:95%;
     left: 94%;
   
+  }
+
+  .forecast_graph_reload.precipitation { 
+    background: url('../../assets/reload_precipitation_icon.png');
+    background-size: cover;
+    /* border-spacing: 3px; */
+    /* border: 1px solid gray; */
+    border: none;
+  }
+
+  .forecast_graph_reload.temperature { 
+    background: url('../../assets/tempIcon.jpg');
+    background-size: cover;
+    /* border-spacing: 3px; */
+    /* border: 1px solid gray; */
+    border: none;
+    width: 40px;
+    height: 40px;
+    bottom:97%;
+    left: 92%;
   }
   
   .forecast_graph_reload:hover {

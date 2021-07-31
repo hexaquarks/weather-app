@@ -103,8 +103,10 @@ export const graphBuilderPrecipitation = (forecastWeather) => {
     const data = [
         {
             day: 'Today',
-            pop: forecastWeather[0].pop * 100,
-            pop_percent: forecastWeather[0].pop * 100 + '%'
+            pop: Math.round(forecastWeather[0].pop)* 100,
+            pop_percent: Math.round(forecastWeather[0].pop) + '%',
+            top_rect: 4
+
         }
     ];
 
@@ -116,8 +118,9 @@ export const graphBuilderPrecipitation = (forecastWeather) => {
             {
                 day: dateBuilder(dayIncrement).substr(
                     0, dateBuilder(dayIncrement).indexOf(' ')),
-                pop: forecastWeather[i].pop * 100,
-                pop_percent: forecastWeather[i].pop * 100 + '%'
+                pop: Math.round(forecastWeather[i].pop) * 100,
+                pop_percent: Math.round(forecastWeather[i].pop) * 100 + '%',
+                top_rect: 4
             }
         );
         dayIncrement.setDate(dayIncrement.getDate() + 1);
@@ -131,10 +134,11 @@ export const graphBuilderPrecipitation = (forecastWeather) => {
             margin={{
                 top: 50, bottom: 5, right: 20, left: 10
             }}
+            barCategoryGap={0}
         >
             <defs>
                 <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="blue" stopOpacity={0.5} />
+                    <stop offset="5%" stopColor="#558cd3" stopOpacity={0.3} />
                     <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
                 </linearGradient>
             </defs>
@@ -145,9 +149,10 @@ export const graphBuilderPrecipitation = (forecastWeather) => {
             />
 
             {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
-            <Bar dataKey="pop" stroke="#82ca9d" fillOpacity={0.52} fill="url(#colorUv)" >
-                <LabelList dataKey="pop_percent" position="top" offset={8} stroke="white" />
+            <Bar dataKey="pop" stackId={1} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
+                <LabelList dataKey="pop_percent" position="top" offset={15} stroke="white" />
             </Bar>
+            <Bar dataKey="top_rect" stackId={1} fill="#1A73E8" ></Bar>
         </BarChart>
     )
 }
@@ -159,10 +164,19 @@ const ForecastChartContainer = ({ forecastWeather }) => {
         graphType === "temp" ? setGraphType("precipitations") : setGraphType("temp")
     }
 
+    const changeIcon = () => {
+        if(graphType==="temp"){
+            return `${styles.forecast_graph_reload} ${styles.precipitation}`;
+        } else {
+            return `${styles.forecast_graph_reload} ${styles.temperature}`;
+        }
+        // return (graphType === "temp") ? `${styles.forecast_graph_reload} ${styles.precipitation}`:`${styles.forecast_graph_reload} ${styles.temeprature}`
+    }
+
     return (
         <div className={styles.forecast_graph} >
             {graphType === "temp" ? graphBuilderTemperature(forecastWeather) : graphBuilderPrecipitation(forecastWeather)}
-            <button className={styles.forecast_graph_reload} onClick={() => changeGraph()}></button>
+            <button className={changeIcon()} onClick={() => changeGraph()}></button>
         </div>
     )
 

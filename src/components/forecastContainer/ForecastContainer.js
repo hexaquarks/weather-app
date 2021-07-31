@@ -5,9 +5,22 @@ import PropTypes from 'prop-types';
 import styles from './ForecastContainer.module.css';
 
 const ForecastContainer = ({ forecastWeather }) => {
+
+    let style = {width: `500px`};
+    const onClick =() => {
+        console.log("adasdsad")
+        const x = 50;
+        style = {
+            transform: `translate(${x}px)`
+        };
+    }
     return (
-        <div className={styles.forecast_container}>
-            {forecastBuilder(forecastWeather, images)}
+        <div className={styles.forecast_window}>
+            <button className={styles.left_arrow} onClick={() => onClick()}></button>
+            <div className={styles.forecast_container} style={style}>
+                {forecastBuilder(forecastWeather, images)}
+            </div>
+            <button className={styles.right_arrow}></button>
         </div>
     )
 }
@@ -19,15 +32,15 @@ const forecastBuilder = (forecastWeather, images) => {
     const forecastDaysClass = [
         'today', 'oneAfter',
         'twoAfter', 'threeAfter',
-        'fourAfter', 'fiveAfter'
+        'fourAfter', 'fiveAfter', 'sixAfter', 'sevenAfter'
     ];
 
-    const forecastDays = [ 'Today' ];
+    const forecastDays = ['Today'];
 
     var dayIncrement = new Date();
     dayIncrement.setDate(dayIncrement.getDate() + 1);
 
-    for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 7; i++) {
         forecastDays.push(dateBuilder(dayIncrement).substr(
             0, dateBuilder(dayIncrement).indexOf(' '))
         );
@@ -35,7 +48,7 @@ const forecastBuilder = (forecastWeather, images) => {
     }
 
     const temp = [];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 7; i++) {
         const altName = forecastDaysClass[i] + "_icon";
         temp.push(
             <div className={forecastDaysClass[i]}>
