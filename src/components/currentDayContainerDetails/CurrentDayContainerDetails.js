@@ -1,9 +1,10 @@
 
 import PropTypes from 'prop-types';
-
 import styles from './CurrentDayContainerDetails.module.css';
 
-const CurrentDayContainerDetails = ({ weather }) => {
+
+const CurrentDayContainerDetails = ({ weather ,unitState}) => {
+
     return (
         <div className={styles.weather_information}>
             <div className={styles.left_column}>
@@ -14,7 +15,7 @@ const CurrentDayContainerDetails = ({ weather }) => {
             </div>
             <div className={styles.right_column}>
                 <tr>
-                    {rightColumnBuilder(weather)}
+                    {rightColumnBuilder(weather, unitState)}
                 </tr>
             </div>
         </div>
@@ -22,6 +23,7 @@ const CurrentDayContainerDetails = ({ weather }) => {
 }
 
 const leftColumnBuilder = () => {
+
     return (
         <table>
             <tbody>
@@ -41,7 +43,9 @@ const leftColumnBuilder = () => {
     )
 }
 
-const rightColumnBuilder = (weather) => {
+const rightColumnBuilder = (weather,unitState) => {
+
+
     return (
         <table>
             <tbody>
@@ -50,8 +54,8 @@ const rightColumnBuilder = (weather) => {
                 <tr>{weather.main.humidity} %</tr>
                 <tr>{weather.visibility / 1000} Km</tr>
                 <tr><td><br /></td></tr>
-                <tr>{weather.main.temp_max.toFixed(0)} °C</tr>
-                <tr>{weather.main.temp_min.toFixed(0)} °C</tr>
+                <tr>{weather.main.temp_max.toFixed(0)} {unitState} </tr>
+                <tr>{weather.main.temp_min.toFixed(0)} {unitState}</tr>
                 <tr><td><br /></td></tr>
                 <tr>{timeParser(weather)[0].slice(0, timeParser(weather)[0].length - 8) + " " + timeParser(weather)[0].slice(timeParser(weather)[0].length - 4, timeParser(weather)[0].length)}</tr>
                 <tr>{timeParser(weather)[1].slice(0, timeParser(weather)[1].length - 8) + " " + timeParser(weather)[1].slice(timeParser(weather)[1].length - 4, timeParser(weather)[1].length)}</tr>

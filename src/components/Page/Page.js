@@ -12,11 +12,12 @@ import ForecastChartContainer from '../forecastChartContainer/ForecastChartConta
 
 import styles from './Page.module.css';
 
-let graphState = "temp";
+// export const Context = React.createContext({ unitState: '°C', setUnitState: () => {} });
 
 const Page = () => {
 
     const { weather, forecastWeather, submitRequest } = DataFetcher();
+
 
     const onKeyPress = value => {
         submitRequest(value);
@@ -25,18 +26,17 @@ const Page = () => {
     return (
         <main>
             {/* {manageSearchBox(search, cityName, setCityName)} */}
-            <SearchBox submitSearch={onKeyPress}/>
+            <SearchBox submitSearch={onKeyPress} />
             {(typeof weather.main != "undefined") ? (
                 <div>
-                    <LocationDetails weather={weather}/>
+                    <LocationDetails weather={weather} />
                     {/* the main contianer box + rectangle */}
-                    <CurrentDayContainer weather={weather}/>
+                    <CurrentDayContainer weather={weather} />
                     <ForecastContainer forecastWeather={forecastWeather} />
-                    <ForecastChartContainer forecastWeather={forecastWeather}/>
+                    <ForecastChartContainer forecastWeather={forecastWeather} />
                 </div>
             ) : ('')}
         </main>
-
     );
 }
 

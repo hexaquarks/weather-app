@@ -1,28 +1,31 @@
 import { manageWeatherIcon } from "../../helper_functions.js";
 import images from '../../images.js';
 import PropTypes from 'prop-types';
+import graphType from '../forecastChartContainer/ForecastChartContainer.js';
+import {  useState } from 'react';
 
 import styles from './CurrentDayContainerOverview.module.css';
 
 const manageBackgroundImage = (weather) => {
-    if (typeof weather.main === 'undefined') return 'weather_box normal';
+    if (typeof weather.main === 'undefined') return `${styles.weather_box} ${styles.normal}`;
     const temperature = weather.main.temp;
 
-    if (temperature > 16) return 'weather_box warm';
-    else if (temperature > 0 && temperature <= 16) return 'weather_box normal';
-    else if (temperature <= 0) return 'weather_box cold';
+    if (temperature > 16) return `${styles.weather_box} ${styles.warm}`;
+    else if (temperature > 0 && temperature <= 16) return `${styles.weather_box} ${styles.normal}`;
+    else if (temperature <= 0) return `${styles.weather_box} ${styles.cold}`;
 }
 
-const CurrentDayContainerOverview = ({ weather }) => {
+const CurrentDayContainerOverview = ({ weather, setUnitState }) => {  
+
     return (
         <div className={manageBackgroundImage(weather)}>
             <div className={styles.top}>
                 <div className={styles.temp}>
                     {Math.round(weather.main.temp)}
                 </div>
-                <button class={styles.celsius}>°C</button>
+                <button class={styles.celsius} onClick={() => setUnitState("°C")}>°C</button>
                 <span id={styles.vertical_bar}>|</span>
-                <button class={styles.farenheit}>°F</button>
+                <button class={styles.farenheit} onClick={() => setUnitState("°F")}>°F</button>
             </div>
             <div className={styles.real_feel}>
                 <span>Feels Like {Math.round(weather.main.feels_like)}°C</span>
