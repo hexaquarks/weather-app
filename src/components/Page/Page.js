@@ -12,31 +12,48 @@ import ForecastChartContainer from '../forecastChartContainer/ForecastChartConta
 
 import styles from './Page.module.css';
 
-// export const Context = React.createContext({ unitState: '°C', setUnitState: () => {} });
+export const Context = React.createContext(
+    {
+        unitState: "°C",
+        currentCity: "",
+        setCurrentCity: () => { },
+        setUnitState: () => { },
+        submitRequest: () => { }
+    });
 
 const Page = () => {
 
     const { weather, forecastWeather, submitRequest } = DataFetcher();
-
+    const [unitState, setUnitState] = useState("°C");
+    const [currentCity , setCurrentCity ] = useState("");
 
     const onKeyPress = value => {
-        submitRequest(value);
+        (unitState==="°C" ) ? submitRequest(value, "metric") : submitRequest(value, "imperial");
+        setCurrentCity(value);
     }
 
     return (
-        <main>
-            {/* {manageSearchBox(search, cityName, setCityName)} */}
-            <SearchBox submitSearch={onKeyPress} />
-            {(typeof weather.main != "undefined") ? (
-                <div>
-                    <LocationDetails weather={weather} />
-                    {/* the main contianer box + rectangle */}
-                    <CurrentDayContainer weather={weather} />
-                    <ForecastContainer forecastWeather={forecastWeather} />
-                    <ForecastChartContainer forecastWeather={forecastWeather} />
-                </div>
-            ) : ('')}
-        </main>
+        <Context.Provider value={{
+            unitState,
+            currentCity,
+            setCurrentCity,
+            setUnitState,
+            submitRequest
+        }}>
+            <main>
+                {/* {manageSearchBox(search, cityName, setCityName)} */}
+                <SearchBox submitSearch={onKeyPress} />
+                {(typeof weather.main != "undefined") ? (
+                    <div>
+                        <LocationDetails weather={weather} />
+                        {/* the main contianer box + rectangle */}
+                        <CurrentDayContainer weather={weather} />
+                        <ForecastContainer forecastWeather={forecastWeather} />
+                        <ForecastChartContainer forecastWeather={forecastWeather} />
+                    </div>
+                ) : ('')}
+            </main>
+        </Context.Provider>
     );
 }
 

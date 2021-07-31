@@ -15,12 +15,12 @@ const DataFetcher= () => {
     const excludes = "current,minutely,hourly,alerts";
     let long, lat;
 
-    const submitRequest = (cityName) => {
+    const submitRequest = (cityName, unit) => {
         console.log("in submit");
         console.log("clicked enter")
             
 
-            fetch(`${api.base}weather?q=${cityName}&units=metric&APPID=${api.key}`)
+            fetch(`${api.base}weather?q=${cityName}&units=${unit}&APPID=${api.key}`)
                 .then(response => response.json())
                 .then(data => {
                     setWeather(data);
@@ -29,7 +29,7 @@ const DataFetcher= () => {
                     const long = data.coord.lon;
                     const lat = data.coord.lat;
 
-                    return fetch(`${api.base}onecall?lat=${lat}&lon=${long}&units=metric&exclude=${excludes}&appid=${api.key}`);
+                    return fetch(`${api.base}onecall?lat=${lat}&lon=${long}&units=${unit}&exclude=${excludes}&appid=${api.key}`);
                 })
                 .then(response => response.json())
                 .then(r => {

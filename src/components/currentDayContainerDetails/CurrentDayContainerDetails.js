@@ -1,10 +1,13 @@
 
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { Context } from '../Page/Page';
 import styles from './CurrentDayContainerDetails.module.css';
 
 
-const CurrentDayContainerDetails = ({ weather ,unitState}) => {
+const CurrentDayContainerDetails = ({ weather }) => {
 
+    const { unitState } = useContext(Context);
     return (
         <div className={styles.weather_information}>
             <div className={styles.left_column}>

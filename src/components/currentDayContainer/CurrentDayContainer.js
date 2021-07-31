@@ -7,15 +7,15 @@ import { useState } from 'react';
 import styles from './CurrentDayContainer.module.css'
 
 const CurrentDayContainer = ({ weather }) => {
-    const [unitState, setUnitState] = useState('°C');
-    const  prop1 = {weather ,unitState};
-    const prop2 = {weather , setUnitState};
+    // const [unitState, setUnitState] = useState('°C');
+    // const  prop1 = {weather ,unitState};
+    // const prop2 = {weather , setUnitState};
     return (
         <div className={styles.main_container}>
             {/* the weather box (left) */}
-            < CurrentDayContainerOverview {...prop2} />
+            < CurrentDayContainerOverview weather={weather} />
             {/* the weather information rectangle (right) */}
-            < CurrentDayContainerDetails {...prop1} />
+            < CurrentDayContainerDetails weather={weather} />
         </div>
     )
 }
