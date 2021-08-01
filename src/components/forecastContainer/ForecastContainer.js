@@ -1,27 +1,30 @@
 import images from '../../images.js';
 import { manageWeatherIcon, dateBuilder } from '../../helper_functions.js';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 import styles from './ForecastContainer.module.css';
 
 const ForecastContainer = ({ forecastWeather }) => {
 
-    let style = {width: `500px`};
-    const onClick =() => {
-        console.log("adasdsad")
-        const x = 50;
-        style = {
-            transform: `translate(${x}px)`
-        };
+    const [xPos, setXPos ] = useState(0);
+    const [style, setStyle] = useState({ transform: `translateX(${xPos}px)` });
+
+    const onClick = (direction) => {
+        (direction === 'left') ? setXPos(xPos => xPos-100) : setXPos(xPos => xPos +100);
+        setStyle({ transform: `translateX(${xPos}px)` });
+        console.log(xPos)
     }
     // style={{transform: `translate(-50px)`}} <-- does work tho
     return (
         <div className={styles.forecast_window}>
-            <button className={styles.left_arrow} onClick={() => onClick()}></button>
-            <div className={styles.forecast_container} style={style}>
-                {forecastBuilder(forecastWeather, images)}
+            <button className={styles.left_arrow} onClick={() => onClick("left")}></button>
+            <div className={styles.forecast_slider}>
+                <div className={styles.forecast_container} style={style}>
+                    {forecastBuilder(forecastWeather, images)}
+                </div>
             </div>
-            <button className={styles.right_arrow}></button>
+            <button className={styles.right_arrow} onClick={() => onClick("right")}></button>
         </div>
     )
 }
