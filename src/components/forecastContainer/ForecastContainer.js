@@ -8,23 +8,26 @@ import styles from './ForecastContainer.module.css';
 const ForecastContainer = ({ forecastWeather }) => {
 
     const [xPos, setXPos ] = useState(0);
-    const [style, setStyle] = useState({ transform: `translateX(${xPos}px)` });
-
+    // const [style, setStyle] = useState({ transform: `translateX(${xPos}px)` });
     const onClick = (direction) => {
-        (direction === 'left') ? setXPos(xPos => xPos-100) : setXPos(xPos => xPos +100);
-        setStyle({ transform: `translateX(${xPos}px)` });
-        console.log(xPos)
+        if(direction === 'left'){
+            xPos === -300 ? setXPos(xPos) : setXPos(xPos-100);
+            //colors
+        }else{
+            xPos === 0 ? setXPos(xPos) : setXPos(xPos+100);
+            //colors
+        }
     }
-    // style={{transform: `translate(-50px)`}} <-- does work tho
+
     return (
         <div className={styles.forecast_window}>
-            <button className={styles.left_arrow} onClick={() => onClick("left")}></button>
+            <button className={styles.left_arrow} onClick={() => onClick('right')}></button>
             <div className={styles.forecast_slider}>
-                <div className={styles.forecast_container} style={style}>
+                <div className={styles.forecast_container} style={{transform : `translateX(${xPos}px)`}}>
                     {forecastBuilder(forecastWeather, images)}
                 </div>
             </div>
-            <button className={styles.right_arrow} onClick={() => onClick("right")}></button>
+            <button className={styles.right_arrow} onClick={() => onClick('left')}></button>
         </div>
     )
 }
@@ -36,7 +39,8 @@ const forecastBuilder = (forecastWeather, images) => {
     const forecastDaysClass = [
         'today', 'oneAfter',
         'twoAfter', 'threeAfter',
-        'fourAfter', 'fiveAfter', 'sixAfter', 'sevenAfter'
+        'fourAfter', 'fiveAfter', 'sixAfter', 'sevenAfter',     
+        'eightAfter'
     ];
 
     const forecastDays = ['Today'];
@@ -44,7 +48,7 @@ const forecastBuilder = (forecastWeather, images) => {
     var dayIncrement = new Date();
     dayIncrement.setDate(dayIncrement.getDate() + 1);
 
-    for (var i = 1; i < 7; i++) {
+    for (var i = 1; i < 8; i++) {
         forecastDays.push(dateBuilder(dayIncrement).substr(
             0, dateBuilder(dayIncrement).indexOf(' '))
         );
@@ -52,14 +56,13 @@ const forecastBuilder = (forecastWeather, images) => {
     }
 
     const temp = [];
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 8; i++) {
         const altName = forecastDaysClass[i] + "_icon";
         temp.push(
             <div className={forecastDaysClass[i]}>
-                {forecastDays[i]}
+                <p className="top_text">{forecastDays[i]}</p>
                 <img src={manageWeatherIcon(forecastWeather[i], images)} alt={altName}></img>
-                <br></br>
-                <span>{Math.round(forecastWeather[i].temp.eve)}° / {Math.round(forecastWeather[i].temp.night)}°</span>
+                <p className="bottom_text">{Math.round(forecastWeather[i].temp.eve)}° / {Math.round(forecastWeather[i].temp.night)}°</p>
             </div>
         )
     }

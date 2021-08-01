@@ -64,6 +64,11 @@
     position:relative;
     margin-top: 15px;
     left: 30%;
+    transition: transform .2s;
+  }
+
+.weather_box img[alt="main_icon"]:hover {
+    transform: scale(1.2);
   }
   
 
@@ -75,19 +80,21 @@
 
 .weather_state {
     color: white;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 600;
     text-shadow: 0px 15px rgba(63, 63, 68, 0.15);
     text-align: center;
-    margin-top: 10px;
+    margin-top: 5px;
+    font-family: 'Arvo', serif;
+
 }
 
 .real_feel {
     text-align: center;
-    font-size: 18px;
     color: white;
-    width: 14ch;
+    width: 12ch;
+    font-size: 18px;
     margin-top: 0px;
     font-weight: 600;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Arvo', serif;
 }

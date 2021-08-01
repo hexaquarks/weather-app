@@ -26,7 +26,11 @@
   
     transition: 0.4s ease;
   }
-  
+
+
+  .search_box .search_bar:hover {
+    transform: scale(1.02);
+  }
   
   /* NOTE focus is for when it's clicked */
   .search_box .search_bar:focus {
