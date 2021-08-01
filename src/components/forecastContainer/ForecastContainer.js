@@ -14,6 +14,7 @@ const ForecastContainer = ({ forecastWeather }) => {
             transform: `translate(${x}px)`
         };
     }
+    // style={{transform: `translate(-50px)`}} <-- does work tho
     return (
         <div className={styles.forecast_window}>
             <button className={styles.left_arrow} onClick={() => onClick()}></button>

@@ -85,3 +85,44 @@
 .right_arrow:hover {
   filter: drop-shadow(0px 0px 6px rgb(126, 153, 64));
 }
+
+@keyframes containerFadeIn {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -1000px, 0);
+    transform: translate3d(0, -1000px, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes unitTransition {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 0, -1000px);
+    transform: translate3d(0, 0, -1000px);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
+.forecast_window {
+  -webkit-animation-name: containerFadeIn;
+    animation-name: containerFadeIn;
+    animation-duration: 1.5s;
+}
+
+/* span { 
+  -webkit-animation-name: unitTransition;
+    animation-name: unitTransition;
+    animation-duration: 5s;
+} */
