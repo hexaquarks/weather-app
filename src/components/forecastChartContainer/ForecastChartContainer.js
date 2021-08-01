@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { dateBuilder } from '../../helper_functions.js';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { Context } from '../Page/Page';
 
 import triangle from '../../assets/triangle.png'
 import triangle_blue from "../../assets/triangle_blue.png"
@@ -8,7 +10,8 @@ import { BarChart, Bar, LineChart, AreaChart, Area, Line, XAxis, YAxis, Cartesia
 
 import styles from './ForecastChartContainer.module.css';
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({ active, payload, label, unitState }) => {
+
     if (active) {
         return (
             <div className={styles.custom_tooltip}>
@@ -16,12 +19,12 @@ const CustomTooltip = ({ active, payload, label }) => {
                 </p>
                 <img src={triangle} id={styles.triangle_icon}/>
                 <span className={styles.toolBox_temp}>
-                    {`${payload[0].value[0]}`} °C
+                    {`${payload[0].value[0]}`} {unitState}
                 </span>
                 <br></br>
                 <img src={triangle_blue} id={styles.triangle_icon_blue} />
                 <span className={styles.toolBox_temp} >
-                    {`${payload[0].value[1]}`} °C
+                    {`${payload[0].value[1]}`} {unitState}
                 </span>
                 <p className={styles.intro} ></p>
             </div>
@@ -31,7 +34,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return null;
 };
 
-export const graphBuilderTemperature = (forecastWeather) => {
+export const graphBuilderTemperature = (forecastWeather, unitState) => {
     if (forecastWeather.daily === undefined) return ' ';
     forecastWeather = forecastWeather.daily;
 
@@ -83,7 +86,7 @@ export const graphBuilderTemperature = (forecastWeather) => {
             <XAxis dataKey="day" stroke="gray" />
             <Tooltip
                 cursor={{ fill: '#2e2d2d' }}
-                content={<CustomTooltip />}
+                content={<CustomTooltip unitState={unitState}/>}
             />
 
             {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
@@ -173,9 +176,10 @@ const ForecastChartContainer = ({ forecastWeather }) => {
         // return (graphType === "temp") ? `${styles.forecast_graph_reload} ${styles.precipitation}`:`${styles.forecast_graph_reload} ${styles.temeprature}`
     }
 
+    const { unitState } = useContext(Context); 
     return (
         <div className={styles.forecast_graph} >
-            {graphType === "temp" ? graphBuilderTemperature(forecastWeather) : graphBuilderPrecipitation(forecastWeather)}
+            {graphType === "temp" ? graphBuilderTemperature(forecastWeather, unitState) : graphBuilderPrecipitation(forecastWeather)}
             <button className={changeIcon()} onClick={() => changeGraph()}></button>
         </div>
     )

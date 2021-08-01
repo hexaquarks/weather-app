@@ -5,29 +5,51 @@ import { useState } from 'react';
 
 import styles from './ForecastContainer.module.css';
 
+const manageOpacity = (direction, xPos) => {
+    if(xPos===0) return direction==='left' ? 25 : 100;
+    else if(xPos<0 && xPos > -300) return 100;
+    else if(xPos=== -300) return direction==='left' ? 100 : 25;
+}
 const ForecastContainer = ({ forecastWeather }) => {
 
-    const [xPos, setXPos ] = useState(0);
+    const [ xPos, setXPos ] = useState(0)
+
     // const [style, setStyle] = useState({ transform: `translateX(${xPos}px)` });
     const onClick = (direction) => {
         if(direction === 'left'){
-            xPos === -300 ? setXPos(xPos) : setXPos(xPos-100);
+            if(xPos === -300) {
+                setXPos(xPos);
+            }else{
+                setXPos(xPos-100);
+            }
+            // xPos === -300 ? setXPos(xPos) : setXPos(xPos-100);
             //colors
         }else{
-            xPos === 0 ? setXPos(xPos) : setXPos(xPos+100);
+            if(xPos === 0) {
+                setXPos(xPos);
+            }else{
+                setXPos(xPos+100);
+            }
+            // xPos === 0 ? setXPos(xPos) : setXPos(xPos+100);
             //colors
         }
     }
 
     return (
         <div className={styles.forecast_window}>
-            <button className={styles.left_arrow} onClick={() => onClick('right')}></button>
+            <button className={styles.left_arrow} 
+                    onClick={() => onClick('right')}
+                    style={{opacity: `${manageOpacity('left' , xPos)}%`}}>        
+            </button>
             <div className={styles.forecast_slider}>
                 <div className={styles.forecast_container} style={{transform : `translateX(${xPos}px)`}}>
                     {forecastBuilder(forecastWeather, images)}
                 </div>
             </div>
-            <button className={styles.right_arrow} onClick={() => onClick('left')}></button>
+            <button className={styles.right_arrow} 
+                    onClick={() => onClick('left')}
+                    style={{opacity: `${manageOpacity('right' , xPos)}%`}}>
+            </button>
         </div>
     )
 }
