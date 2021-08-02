@@ -2,7 +2,6 @@
 import CurrentDayContainerOverview from "../currentDayContainerOverview/CurrentDayContainerOverview.js"
 import CurrentDayContainerDetails from "../currentDayContainerDetails/CurrentDayContainerDetails.js"
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
 import styles from './CurrentDayContainer.module.css'
 

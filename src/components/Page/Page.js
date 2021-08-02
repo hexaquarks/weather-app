@@ -1,8 +1,7 @@
 
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import DataFetcher from '../../fetch_data.js';
 
-import images from '../../images.js';
 import SearchBox from '../searchBox/SearchBox'
 
 import LocationDetails from '../locationDetails/LocationDetails.js';
@@ -10,7 +9,6 @@ import CurrentDayContainer from '../currentDayContainer/CurrentDayContainer.js';
 import ForecastContainer from '../forecastContainer/ForecastContainer.js';
 import ForecastChartContainer from '../forecastChartContainer/ForecastChartContainer.js';
 
-import styles from './Page.module.css';
 
 export const Context = React.createContext(
     {
