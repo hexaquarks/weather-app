@@ -17,21 +17,9 @@ const ForecastContainer = ({ forecastWeather }) => {
     // const [style, setStyle] = useState({ transform: `translateX(${xPos}px)` });
     const onClick = (direction) => {
         if(direction === 'left'){
-            if(xPos === -300) {
-                setXPos(xPos);
-            }else{
-                setXPos(xPos-100);
-            }
-            // xPos === -300 ? setXPos(xPos) : setXPos(xPos-100);
-            //colors
+            xPos === -300 ? setXPos(xPos) : setXPos(xPos-100);
         }else{
-            if(xPos === 0) {
-                setXPos(xPos);
-            }else{
-                setXPos(xPos+100);
-            }
-            // xPos === 0 ? setXPos(xPos) : setXPos(xPos+100);
-            //colors
+            xPos === 0 ? setXPos(xPos) : setXPos(xPos+100);
         }
     }
 

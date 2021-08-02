@@ -125,3 +125,15 @@
       animation-name: containerFadeIn;
       animation-duration: 1.25s;
   }
+
+  @media only screen and (max-width: 400px) {
+    .forecast_graph {
+      width: 95%;
+    }
+    .forecast_graph.barChart {
+      width: 200px;
+    }
+    .forecast_graph::before {
+      width: 95%;
+    }
+  }

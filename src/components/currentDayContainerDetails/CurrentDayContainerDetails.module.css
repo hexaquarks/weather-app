@@ -34,3 +34,16 @@ table {
     color: rgb(216, 215, 215);
     height: 20px;
 }
+
+@media only screen and (max-width: 500px) {
+    .left_column ,.right_column {
+        font-size: 15px;
+        padding-top: 3px;
+    }
+    .right_column {
+        margin-right: 12px;
+    }
+    table {
+
+    }
+}

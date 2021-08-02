@@ -8,6 +8,7 @@
 }
 
 .forecast_container {
+
   
   display: flex;
   width: 500px;
@@ -35,7 +36,7 @@
 }
 
 .forecast_container> div {
-  margin-left: 17px;
+  margin-left: 12px;
   margin-right: 15px;
 }
 
@@ -47,6 +48,7 @@ p {
   margin-top:2px;
   font-family: 'Arvo', serif;
   font-size:  14px;
+  width: 8ch;
 }
 .forecast_slider {
 
@@ -56,16 +58,6 @@ p {
 
    overflow:hidden;
   float:right;
-}
-
-@media only screen and (max-width: 570px) {
-  .left_arrow, 
-  .right_arrow {
-    display: none;
-  }
-  .forecast_window {
-    width:500px;
-  }
 }
 
 .left_arrow {
@@ -140,3 +132,37 @@ p {
     animation-name: unitTransition;
     animation-duration: 5s;
 } */
+
+
+
+@media only screen and (max-width: 570px) {
+  .left_arrow, 
+  .right_arrow {
+    display: none;
+  }
+  .forecast_window {
+    width:500px;
+  }
+}
+
+
+@media only screen and (max-width: 400px) {
+  .left_arrow, 
+  .right_arrow {
+    display: none;
+  }
+  .forecast_window, .forecast_slider::before {
+    width:95%;
+  }
+  .forecast_slider{
+    overflow-x: scroll;
+    scrollbar-color: white;
+  }
+  .forecast_container > div > img {
+    height: 50px;
+  }
+  .forecast_container > div {
+    margin-right: 10px;
+    margin-left: 5px;
+  }
+}

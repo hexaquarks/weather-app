@@ -8,6 +8,8 @@
     text-align: center;
     text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
     font-family: 'Merriweather', serif;
+
+    animation: containerFadeInLeft 1s ease-in-out;
   
   }
   
@@ -22,4 +24,34 @@
     font-family: 'Playfair Display', serif;
     font-size: 25px;
     margin-bottom: 2%;
+
+    animation: containerFadeInRight 1s ease-in-out;
+  }
+
+  @keyframes containerFadeInLeft {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(-2000px, 0, 0);
+      transform: translate3d(-2000px, 0, 0);
+    }
+  
+    to {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes containerFadeInRight {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(2000px, 0, 0);
+      transform: translate3d(2000px, 0, 0);
+    }
+  
+    to {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
   }

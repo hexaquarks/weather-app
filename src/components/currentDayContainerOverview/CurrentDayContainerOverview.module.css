@@ -1,6 +1,5 @@
 .weather_box {
     display: grid;
-    width: 40%;
     height: inherit;
     box-shadow: 3px 6px rgba(0, 0, 0, 0.2);
     border-radius: 16px;
@@ -15,8 +14,7 @@
 }
 
 .temp {
-    position: relative;
-    width: 2ch;
+    width: 40%;
     color: rgba(255, 255, 255, 1.0);
     font-size: 62px;
     font-weight: 500;
@@ -32,6 +30,7 @@
     font-size: 22px;
     cursor: pointer;
     margin-bottom: 30px;
+    width: 60%;
 }
 
 .celsius:hover, .farenheit:hover {
@@ -62,8 +61,8 @@
 
 .weather_box img[alt="main_icon"] {
     position:relative;
-    margin-top: 15px;
-    left: 30%;
+    margin: 0 auto;
+    margin-top: 10px;
     transition: transform .2s;
   }
 
@@ -75,7 +74,6 @@
 .main_icon {
     position: relative;
     margin-top: 15px;
-    left: 30%;
 }
 
 .weather_state {
@@ -98,3 +96,29 @@
     font-weight: 600;
     font-family: 'Arvo', serif;
 }
+
+
+@media only screen and (max-width: 500px) {
+    .weather_box {
+      width:40%;
+      height: 100%;
+    }
+    .temp {
+        width: auto;
+        font-size: 55px;
+    }
+    .celsius,
+    .farenheit, #vertical_bar {
+        font-size: 18px;
+        width: auto;
+    }
+    .real_feel {
+        font-size: 15px;
+    }
+    .weather_box img[alt="main_icon"] {
+        width: 50%;
+    }
+    .weather_state {
+        font-size: 22px;
+    }
+  }
