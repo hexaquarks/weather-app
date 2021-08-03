@@ -35,9 +35,10 @@
   }
 
   
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 520px) {
   .main_container {
-    width:95%;
-    height: 220px;
+    width: 94%;
+    height: 185px;
   }
 }
+

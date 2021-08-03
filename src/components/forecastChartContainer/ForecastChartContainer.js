@@ -108,8 +108,8 @@ export const graphBuilderPrecipitation = (forecastWeather) => {
     const data = [
         {
             day: 'Today',
-            pop: Math.round(forecastWeather[0].pop) * 100,
-            pop_percent: Math.round(forecastWeather[0].pop) * 100 + '%',
+            pop: Math.round(forecastWeather[0].pop * 100 ),
+            pop_percent: Math.round(forecastWeather[0].pop  * 100) + '%',
             top_rect: 4
 
         }
@@ -123,8 +123,8 @@ export const graphBuilderPrecipitation = (forecastWeather) => {
             {
                 day: dateBuilder(dayIncrement).substr(
                     0, dateBuilder(dayIncrement).indexOf(' ')),
-                pop: Math.round(forecastWeather[i].pop) * 100,
-                pop_percent: Math.round(forecastWeather[i].pop) * 100 + '%',
+                pop: Math.round(forecastWeather[i].pop  * 100),
+                pop_percent: Math.round(forecastWeather[i].pop  * 100) + '%',
                 top_rect: 4
             }
         );

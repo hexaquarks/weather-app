@@ -135,7 +135,7 @@ p {
 
 
 
-@media only screen and (max-width: 570px) {
+/* @media only screen and (max-width: 570px) {
   .left_arrow, 
   .right_arrow {
     display: none;
@@ -143,20 +143,20 @@ p {
   .forecast_window {
     width:500px;
   }
-}
+} */
 
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 520px) {
   .left_arrow, 
   .right_arrow {
-    display: none;
+    
   }
   .forecast_window, .forecast_slider::before {
-    width:95%;
+    width:100%;
   }
   .forecast_slider{
-    overflow-x: scroll;
-    scrollbar-color: white;
+    /* overflow-x: scroll;
+    scrollbar-color: white; */
   }
   .forecast_container > div > img {
     height: 50px;
@@ -164,5 +164,8 @@ p {
   .forecast_container > div {
     margin-right: 10px;
     margin-left: 5px;
+  }
+  .forecast_slider:before {
+    width: 89%;
   }
 }

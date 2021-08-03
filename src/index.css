@@ -16,11 +16,15 @@ body {
 
 }
 
-/* main {
+main {
   min-height: 100vh;
   background-image: linear-gradient(to bottom, rgba(0,0,0, 0.2), rgba(0,0 ,0, 0.75));
   padding: 25px;
   padding-top: 25px;
-} */
+}
 
 
+hr {
+  margin-top: 5px;
+  width: 300px;
+}
