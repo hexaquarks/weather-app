@@ -10,8 +10,7 @@ import snow from "./assets/snow.png"
 import thunderstorm from "./assets/thunderstorm.png"
 import windy2 from "./assets/windy2.png"
 
-export default [
-    clear, 
+const array = [clear, 
     hail, 
     heavyCloud,
     heavyRain,
@@ -21,5 +20,6 @@ export default [
     // sleet,
     snow,
     thunderstorm,
-    windy2
-];
+    windy2];
+
+export default array;
