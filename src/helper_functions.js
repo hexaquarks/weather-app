@@ -39,8 +39,6 @@ export const manageBackgroundImage = (weather) => {
 }
 
 export const manageWeatherIcon = (weather, images) => {
-    const main = weather.weather[0].main;
-    const description = weather.weather[0].description;
     let id = weather.weather[0].id;
 
     if (id >= 200 && id <= 232) return images[8];

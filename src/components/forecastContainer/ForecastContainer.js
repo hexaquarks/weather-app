@@ -66,7 +66,7 @@ const forecastBuilder = (forecastWeather, images) => {
     }
 
     const temp = [];
-    for (var i = 0; i < 8; i++) {
+    for (i = 0; i < 8; i++) {
         const altName = forecastDaysClass[i] + "_icon";
         temp.push(
             <div className={forecastDaysClass[i]}>

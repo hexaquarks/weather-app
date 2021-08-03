@@ -6,7 +6,7 @@ import { Context } from '../Page/Page';
 
 import triangle from '../../assets/triangle.png'
 import triangle_blue from "../../assets/triangle_blue.png"
-import { BarChart, Bar, LineChart, AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
+import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
 
 import styles from './ForecastChartContainer.module.css';
 
@@ -17,12 +17,12 @@ const CustomTooltip = ({ active, payload, label, unitState }) => {
             <div className={styles.custom_tooltip}>
                 <p className={styles.toolBox_dayLabel}>{`${label}`}
                 </p>
-                <img src={triangle} id={styles.triangle_icon} />
+                <img src={triangle} id={styles.triangle_icon} alt="redTriangle_toolTip_icon"/>
                 <span className={styles.toolBox_temp}>
                     {`${payload[0].value[0]}`} {unitState}
                 </span>
                 <br></br>
-                <img src={triangle_blue} id={styles.triangle_icon_blue} />
+                <img src={triangle_blue} id={styles.triangle_icon_blue} alt="blueTriangle_toolTip_icon" />
                 <span className={styles.toolBox_temp} >
                     {`${payload[0].value[1]}`} {unitState}
                 </span>

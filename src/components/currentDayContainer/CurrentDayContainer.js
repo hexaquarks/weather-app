@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import styles from './CurrentDayContainer.module.css'
 
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, {useEffect, useRef } from 'react'
 
 
 const CurrentDayContainer = ({ weather }) => {
@@ -37,20 +37,20 @@ const CurrentDayContainer = ({ weather }) => {
 
     //     }
     // });
-    const stageCanvasRef = useRef(null);
+    // const stageCanvasRef = useRef(null);
 
-    // useEffect will run on stageCanvasRef value assignment
-    useEffect( () => {
+    // // useEffect will run on stageCanvasRef value assignment
+    // useEffect( () => {
 
-        // The 'current' property contains info of the reference:
-        // align, title, ... , width, height, etc.
-        if(stageCanvasRef.current){
+    //     // The 'current' property contains info of the reference:
+    //     // align, title, ... , width, height, etc.
+    //     // if(stageCanvasRef.current){
 
-            let height = stageCanvasRef.current.offsetHeight;
-            let width  = stageCanvasRef.current.offsetWidth;
-        }
+    //     //     let height = stageCanvasRef.current.offsetHeight;
+    //     //     let width  = stageCanvasRef.current.offsetWidth;
+    //     // }
 
-    }, [stageCanvasRef]);
+    // }, [stageCanvasRef]);
     // { width: `${dimensions.width}px`, height: `${dimensions.height}px` }
     // transform: `translate(-50%, -50%) ` + `scale(` + scale + `)`
     
