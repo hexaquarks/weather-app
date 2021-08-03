@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import styles from './CurrentDayContainer.module.css'
 
 
-import React, {useEffect, useRef } from 'react'
+import React from 'react'
 
 
 const CurrentDayContainer = ({ weather }) => {
