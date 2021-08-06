@@ -1,5 +1,6 @@
 import React from "react";
 import { scaleRotate as Menu } from "react-burger-menu";
+// import styles from '../../components/sideMenu/SideMenu.module.css';
 
 
 export default props => {

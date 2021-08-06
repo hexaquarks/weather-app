@@ -1,6 +1,7 @@
 .search_box {
     width: 100%;
     margin: 0 0 35px;
+    padding-right: 10%;
   }
   
   /* NODE space between .search-box and .search-bar here is important */

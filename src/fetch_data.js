@@ -9,14 +9,13 @@ const api = {
 const DataFetcher= () => {
     const [weather, setWeather] = useState('');
     const [forecastWeather, setForecastWeather] = useState('');
-    // const [latlong ,setLatLong] = useState('');
+    const [hourlyWeather ,setHourlyWeather ] = useState('');
+
     const excludes = "current,minutely,hourly,alerts";
+    const excludesHourle = "current,minutely,daily,alerts";
 
 
     const submitRequest = (cityName, unit) => {
-        console.log("in submit");
-        console.log("clicked enter")
-            
 
             fetch(`${api.base}weather?q=${cityName}&units=${unit}&APPID=${api.key}`)
                 .then(response => response.json())
@@ -24,8 +23,13 @@ const DataFetcher= () => {
                     setWeather(data);
                     console.log(data);
 
-                    const long = data.coord.lon;
-                    const lat = data.coord.lat;
+                    let long, lat;
+                    if(typeof data.coord != "undefined"){
+                        long = data.coord.lon;
+                        lat = data.coord.lat;
+                    } else {
+
+                    }
 
                     return fetch(`${api.base}onecall?lat=${lat}&lon=${long}&units=${unit}&exclude=${excludes}&appid=${api.key}`);
                 })
