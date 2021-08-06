@@ -1,5 +1,5 @@
 # Weather Application 
-Simple weather application using [Openweathermap.org API](https://openweathermap.org/current).
+Simple weather application using [Openweathermap.org API](https://openweathermap.org/current), with deployment available [here](https://hexaquarks.github.io/Weather_App/).
 
 ___
 
