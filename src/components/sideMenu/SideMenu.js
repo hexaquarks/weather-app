@@ -11,16 +11,16 @@ export default props => {
         Home
       </a>
 
+      <a className="menu-item" href="/36HoursForecast">
+        36 Hours Forecast
+      </a>
+
+      <a className="menu-item" href="/7DaysForecast">
+        7 Days Forecast
+      </a>
+
       <a className="menu-item" href="/about">
         About
-      </a>
-
-      <a className="menu-item" href="/services">
-        Services
-      </a>
-
-      <a className="menu-item" href="/contact">
-        Contact us
       </a>
     </Menu>
   );
