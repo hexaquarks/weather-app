@@ -30,6 +30,7 @@
     font-size: 22px;
     cursor: pointer;
     margin-bottom: 30px;
+    margin-left: 6px;
     width: 60%;
 }
 
@@ -40,7 +41,7 @@
 #vertical_bar {
     margin-top: 7px;
     margin-left: 5px;
-    margin-right: 3px;
+    margin-right: -3px;
     font-size: 21px;
 }
 
