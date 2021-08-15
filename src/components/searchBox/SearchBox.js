@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 
 import styles from './SearchBox.module.css';
 import { Wrapper } from '@googlemaps/react-wrapper';

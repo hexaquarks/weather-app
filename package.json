@@ -16,6 +16,7 @@
     "react-alice-carousel": "^2.5.1",
     "react-burger-menu": "^3.0.6",
     "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
     "react-particles-js": "^3.5.3",
     "react-places-autocomplete": "^7.3.0",
     "react-scripts": "4.0.3",
@@ -65,5 +66,17 @@
   "devDependencies": {
     "gh-pages": "^3.2.3",
     "webpack": "^4.44.2"
+  },
+  "description": "Simple weather application using [Openweathermap.org API](https://openweathermap.org/current), with deployment available [here](https://hexaquarks.github.io/Weather_App/).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hexaquarks/Weather_App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hexaquarks/Weather_App/issues"
   }
 }
