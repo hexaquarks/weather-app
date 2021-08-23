@@ -6,13 +6,13 @@ const api = {
 
 // const geoKey = "158511353267085116134x75570";
 
-const DataFetcher= () => {
+const DataFetcher= (type) => {
     const [weather, setWeather] = useState('');
     const [forecastWeather, setForecastWeather] = useState('');
     const [hourlyWeather ,setHourlyWeather ] = useState('');
 
-    const excludes = "current,minutely,hourly,alerts";
-    const excludesHourle = "current,minutely,daily,alerts";
+    const excludesWeekly = "current,minutely,hourly,alerts";
+    const excludesHourly = "current,minutely,daily,alerts";
 
 
     const submitRequest = (cityName, unit) => {
@@ -31,7 +31,12 @@ const DataFetcher= () => {
 
                     }
 
-                    return fetch(`${api.base}onecall?lat=${lat}&lon=${long}&units=${unit}&exclude=${excludes}&appid=${api.key}`);
+                    if(type === 'weekly'){
+                        return fetch(`${api.base}onecall?lat=${lat}&lon=${long}&units=${unit}&exclude=${excludesWeekly}&appid=${api.key}`);
+                    } else if (type === 'hourly') {
+                        console.log("IN")
+                        return fetch(`${api.base}onecall?lat=${lat}&lon=${long}&units=${unit}&exclude=${excludesHourly}&appid=${api.key}`);
+                    } 
                 })
                 .then(response => response.json())
                 .then(r => {

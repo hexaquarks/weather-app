@@ -10,9 +10,9 @@ const manageOpacity = (direction, xPos) => {
     else if(xPos<0 && xPos > -300) return 100;
     else if(xPos=== -300) return direction==='left' ? 100 : 25;
 }
-const ForecastContainer = ({ forecastWeather }) => {
+const ForecastContainer = (props) => {
 
-    const [ xPos, setXPos ] = useState(0)
+    const [ xPos, setXPos ] = useState(0);
 
     // const [style, setStyle] = useState({ transform: `translateX(${xPos}px)` });
     const onClick = (direction) => {
@@ -31,7 +31,10 @@ const ForecastContainer = ({ forecastWeather }) => {
             </button>
             <div className={styles.forecast_slider}>
                 <div className={styles.forecast_container} style={{transform : `translateX(${xPos}px)`}}>
-                    {forecastBuilder(forecastWeather, images)}
+                    {props.type==='weekly' 
+                        ? forecastBuilderWeekly(props.forecastWeather, images)
+                        : forecastBuilderHourly(props.forecastWeather, images)
+                    }
                 </div>
             </div>
             <button className={styles.right_arrow} 
@@ -42,7 +45,7 @@ const ForecastContainer = ({ forecastWeather }) => {
     )
 }
 
-const forecastBuilder = (forecastWeather, images) => {
+const forecastBuilderWeekly = (forecastWeather, images) => {
     if (forecastWeather.daily === undefined) return ' ';
 
     forecastWeather = forecastWeather.daily;
@@ -79,8 +82,50 @@ const forecastBuilder = (forecastWeather, images) => {
     return temp;
 }
 
-ForecastContainer.propTypes = {
-    weather: PropTypes.object.isRequired,
-};
+const forecastBuilderHourly = (forecastWeather, images) => {
+    if (forecastWeather.hourly === undefined) return ' ';
+
+    
+    forecastWeather = forecastWeather.hourly;
+    const forecastHours = [];
+
+    var hourIncrement = new Date();
+    hourIncrement.setDate(hourIncrement.getDate());
+
+    for (var i = 0; i < 24; i++) {
+        console.log(hourIncrement.getHours());
+        hourIncrement.setHours(hourIncrement.getHours() + 1);
+        forecastHours.push(formatAMPM(hourIncrement));
+    }
+
+    const temp = [];
+    for (i = 0; i < 24; i++) {
+        const altName = i+ "_icon";
+        temp.push(
+            <div className={i}>
+                <p className="top_text">{forecastHours[i]}</p>
+                <img src={manageWeatherIcon(forecastWeather[i], images)} alt={altName}></img>
+                <p className="bottom_text">{Math.round(forecastWeather[i].temp)}°</p>
+            </div>
+        )
+    }
+    return temp;
+}
+
+function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
+
+// ForecastContainer.propTypes = {
+//     weather: PropTypes.object.isRequired,
+// };
 
 export default ForecastContainer;

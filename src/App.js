@@ -14,10 +14,11 @@ function App() {
 
       <div id="page-wrap" >
       <Switch>
-        <Route exact path='/' component={() => <Page />} />
-        <Route exact path='/36HoursForecast' component={() => <Page />} />
-        <Route exact path='/7DaysForecast' component={() => <Page />} />
-        <Route exact path='/about' component={() => <Page />} />
+        <Route exact path='/' component={() => <Page type={'weekly'}/>} />
+        <Route exact path='/Weather_App' component={() => <Page type={'weekly'}/>} />
+        <Route exact path='/36HoursForecast' component={() => <Page type={'hourly'}/>} />
+        <Route exact path='/7DaysForecast' component={() => <Page type={'weekly'}/>} />
+        <Route exact path='/about' component={() => <Page type={'weekly'}/>} />
       </Switch>
         {/* <Page /> */}
       </div>

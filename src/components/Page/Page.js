@@ -19,9 +19,9 @@ export const Context = React.createContext(
         submitRequest: () => { }
     });
 
-const Page = () => {
+const Page = ({ type }) => {
 
-    const { weather, forecastWeather, submitRequest } = DataFetcher();
+    const { weather, forecastWeather, submitRequest } = DataFetcher(type);
     const [unitState, setUnitState] = useState("°C");
     const [currentCity , setCurrentCity ] = useState("");
 
@@ -30,6 +30,10 @@ const Page = () => {
         setCurrentCity(value);
     }
 
+    let propsForecast = {
+        forecastWeather: forecastWeather,
+        type: type //or {props.type} ? 
+    }
     return (
         <Context.Provider value={{
             unitState,
@@ -38,6 +42,7 @@ const Page = () => {
             setUnitState,
             submitRequest
         }}>
+
             <main>
                 {/* {manageSearchBox(search, cityName, setCityName)} */}
                 <SearchBox submitSearch={onKeyPress} />
@@ -46,7 +51,7 @@ const Page = () => {
                         <LocationDetails weather={weather} />
                         {/* the main contianer box + rectangle */}
                         <CurrentDayContainer weather={weather} />
-                        <ForecastContainer forecastWeather={forecastWeather} />
+                        <ForecastContainer {...propsForecast} />
                         <ForecastChartContainer forecastWeather={forecastWeather} />
                     </div>
                 ) : ('')}
