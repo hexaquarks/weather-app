@@ -6,7 +6,7 @@ import { Context } from '../Page/Page';
 
 import triangle from '../../assets/triangle.png'
 import triangle_blue from "../../assets/triangle_blue.png"
-import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
+import { BarChart, Brush, Bar, XAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
 
 import styles from './ForecastChartContainer.module.css';
 
@@ -17,7 +17,7 @@ const CustomTooltip = ({ active, payload, label, unitState }) => {
             <div className={styles.custom_tooltip}>
                 <p className={styles.toolBox_dayLabel}>{`${label}`}
                 </p>
-                <img src={triangle} id={styles.triangle_icon} alt="redTriangle_toolTip_icon"/>
+                <img src={triangle} id={styles.triangle_icon} alt="redTriangle_toolTip_icon" />
                 <span className={styles.toolBox_temp}>
                     {`${payload[0].value[0]}`} {unitState}
                 </span>
@@ -39,11 +39,11 @@ function formatAMPM(date) {
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
-  }
-  
+}
+
 export const graphBuilderTemperatureWeekly = (forecastWeather, unitState) => {
     if (forecastWeather.daily === undefined) return ' ';
     forecastWeather = forecastWeather.daily;
@@ -120,7 +120,7 @@ export const graphBuilderTemperatureHourly = (forecastWeather, unitState) => {
     hourIncrement.setDate(hourIncrement.getDate());
 
     const data = [];
-    for( var  i = 0 ; i < 24 ; i++){
+    for (var i = 0; i < 24; i++) {
         data.push(
             {
                 time: hourIncrement.getHours(),
@@ -131,15 +131,15 @@ export const graphBuilderTemperatureHourly = (forecastWeather, unitState) => {
         hourIncrement.setHours(hourIncrement.getHours() + 1);
     }
     return (
-        <ResponsiveContainer>
             <BarChart className="barChart"
-                width="100%"
-                height={250}
+                width={1500}
+                height={300}
                 data={data}
                 margin={{
-                    top: 50, bottom: 5, right: 10, left: 10
+                    top: 50, bottom: 60, right: 10, left: 10
                 }}
                 barCategoryGap={0}
+                
             >
                 <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -148,17 +148,25 @@ export const graphBuilderTemperatureHourly = (forecastWeather, unitState) => {
                     </linearGradient>
                 </defs>
                 <XAxis dataKey="time" stroke="gray" />
-                <Tooltip
+                {/* <Tooltip
                     cursor={{ fill: '#2e2d2d' }}
-                    content={<CustomTooltip />}
-                />
+                    content={<CustomTooltip unitState={unitState}/>}
+                /> */}
+
 
                 {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
-                <Bar dataKey="temp" stackId={1} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
+                <Bar dataKey="temp" stackId={0} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
                     <LabelList dataKey="tempString" position="top" offset={15} stroke="white" />
                 </Bar>
+                {/* <Brush
+                    dataKey='time'
+                    height={20}
+                    stroke="#000000"
+                    startIndex={0}
+                    endIndex={10}
+                    travellerWidth={10}>
+                </Brush> */}
             </BarChart>
-        </ResponsiveContainer>
 
     )
 }
@@ -170,8 +178,8 @@ export const graphBuilderPrecipitationWeekly = (forecastWeather) => {
     const data = [
         {
             day: 'Today',
-            pop: Math.round(forecastWeather[0].pop * 100 ),
-            pop_percent: Math.round(forecastWeather[0].pop  * 100) + '%',
+            pop: Math.round(forecastWeather[0].pop * 100),
+            pop_percent: Math.round(forecastWeather[0].pop * 100) + '%',
             top_rect: 4
 
         }
@@ -185,8 +193,8 @@ export const graphBuilderPrecipitationWeekly = (forecastWeather) => {
             {
                 day: dateBuilder(dayIncrement).substr(
                     0, dateBuilder(dayIncrement).indexOf(' ')),
-                pop: Math.round(forecastWeather[i].pop  * 100),
-                pop_percent: Math.round(forecastWeather[i].pop  * 100) + '%',
+                pop: Math.round(forecastWeather[i].pop * 100),
+                pop_percent: Math.round(forecastWeather[i].pop * 100) + '%',
                 top_rect: 4
             }
         );
@@ -235,7 +243,7 @@ export const graphBuilderPrecipitationHourly = (forecastWeather) => {
     hourIncrement.setDate(hourIncrement.getDate());
 
     const data = [];
-    for( var  i = 0 ; i < 24 ; i++){
+    for (var i = 0; i < 24; i++) {
         data.push(
             {
                 time: hourIncrement.getHours(),
@@ -247,7 +255,7 @@ export const graphBuilderPrecipitationHourly = (forecastWeather) => {
     return (
         <ResponsiveContainer>
             <BarChart className="barChart"
-                width="100%"
+                width={2000}
                 height={250}
                 data={data}
                 margin={{
@@ -296,17 +304,19 @@ const ForecastChartContainer = (props) => {
 
     const { unitState } = useContext(Context);
     return (
-        <div className={styles.forecast_graph} >
-            {graphType === "temp" 
-                ? props.type === 'weekly' 
+        <div className={styles.forecast_graph} >   
+        <div className={styles.forecast_graph_slider}>
+            {graphType === "temp"
+                ? props.type === 'weekly'
                     ? graphBuilderTemperatureWeekly(props.forecastWeather, unitState)
                     : graphBuilderTemperatureHourly(props.forecastWeather, unitState)
-                : props.type === 'weekly' 
+                : props.type === 'weekly'
                     ? graphBuilderPrecipitationWeekly(props.forecastWeather)
                     : graphBuilderPrecipitationHourly(props.forecastWeather)
             }
-            <button className={changeIcon()} onClick={() => changeGraph()}></button>
+            {/* <button className={changeIcon()} onClick={() => changeGraph()}></button> */}
         </div>
+        </div>             
     )
 
 }
