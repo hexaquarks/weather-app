@@ -5,19 +5,26 @@ import { useState } from 'react';
 
 import styles from './ForecastContainer.module.css';
 
+let type = '';
+const leftMax = (type) => {
+    return (type === 'weekly') ? 300 : 900;
+}
+
 const manageOpacity = (direction, xPos) => {
     if(xPos===0) return direction==='left' ? 25 : 100;
-    else if(xPos<0 && xPos > -300) return 100;
-    else if(xPos=== -300) return direction==='left' ? 100 : 25;
+    else if(xPos<0 && xPos > -leftMax(type)) return 100;
+    else if(xPos=== -leftMax(type)) return direction==='left' ? 100 : 25;
 }
 const ForecastContainer = (props) => {
+
+    type = props.type;
 
     const [ xPos, setXPos ] = useState(0);
 
     // const [style, setStyle] = useState({ transform: `translateX(${xPos}px)` });
     const onClick = (direction) => {
         if(direction === 'left'){
-            xPos === -300 ? setXPos(xPos) : setXPos(xPos-100);
+            xPos === -leftMax(type) ? setXPos(xPos) : setXPos(xPos-100);
         }else{
             xPos === 0 ? setXPos(xPos) : setXPos(xPos+100);
         }
@@ -93,7 +100,6 @@ const forecastBuilderHourly = (forecastWeather, images) => {
     hourIncrement.setDate(hourIncrement.getDate());
 
     for (var i = 0; i < 24; i++) {
-        console.log(hourIncrement.getHours());
         hourIncrement.setHours(hourIncrement.getHours() + 1);
         forecastHours.push(formatAMPM(hourIncrement));
     }
