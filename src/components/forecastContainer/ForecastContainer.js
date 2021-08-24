@@ -75,18 +75,8 @@ const forecastBuilderWeekly = (forecastWeather, images) => {
         dayIncrement.setDate(dayIncrement.getDate() + 1);
     }
 
-    const temp = [];
-    for (i = 0; i < 8; i++) {
-        const altName = forecastDaysClass[i] + "_icon";
-        temp.push(
-            <div className={forecastDaysClass[i]}>
-                <p className="top_text">{forecastDays[i]}</p>
-                <img src={manageWeatherIcon(forecastWeather[i], images)} alt={altName}></img>
-                <p className="bottom_text">{Math.round(forecastWeather[i].temp.eve)}° / {Math.round(forecastWeather[i].temp.night)}°</p>
-            </div>
-        )
-    }
-    return temp;
+    return populateForecastElements(8, forecastDays, forecastWeather);
+
 }
 
 const forecastBuilderHourly = (forecastWeather, images) => {
@@ -104,18 +94,7 @@ const forecastBuilderHourly = (forecastWeather, images) => {
         forecastHours.push(formatAMPM(hourIncrement));
     }
 
-    const temp = [];
-    for (i = 0; i < 24; i++) {
-        const altName = i+ "_icon";
-        temp.push(
-            <div className={i}>
-                <p className="top_text">{forecastHours[i]}</p>
-                <img src={manageWeatherIcon(forecastWeather[i], images)} alt={altName}></img>
-                <p className="bottom_text">{Math.round(forecastWeather[i].temp)}°</p>
-            </div>
-        )
-    }
-    return temp;
+    return populateForecastElements(24, forecastHours, forecastWeather);
 }
 
 function formatAMPM(date) {
@@ -128,7 +107,21 @@ function formatAMPM(date) {
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
   }
-
+  
+  const populateForecastElements = (numberOfElements, forecastNamesList, forecastWeather) => {
+    const temp = [];
+    for (var i = 0; i < numberOfElements; i++) {
+        const altName = i+ "_icon";
+        temp.push(
+            <div className={i}>
+                <p className="top_text">{forecastNamesList[i]}</p>
+                <img src={manageWeatherIcon(forecastWeather[i], images)} alt={altName}></img>
+                <p className="bottom_text">{Math.round(forecastWeather[i].temp)}°</p>
+            </div>
+        )
+    }
+    return temp;
+}
 
 // ForecastContainer.propTypes = {
 //     weather: PropTypes.object.isRequired,
