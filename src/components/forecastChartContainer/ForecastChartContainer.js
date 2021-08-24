@@ -33,8 +33,18 @@ const CustomTooltip = ({ active, payload, label, unitState }) => {
 
     return null;
 };
-
-export const graphBuilderTemperature = (forecastWeather, unitState) => {
+function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+  
+export const graphBuilderTemperatureWeekly = (forecastWeather, unitState) => {
     if (forecastWeather.daily === undefined) return ' ';
     forecastWeather = forecastWeather.daily;
 
@@ -101,7 +111,59 @@ export const graphBuilderTemperature = (forecastWeather, unitState) => {
     )
 }
 
-export const graphBuilderPrecipitation = (forecastWeather) => {
+export const graphBuilderTemperatureHourly = (forecastWeather, unitState) => {
+    if (forecastWeather.hourly === undefined) return ' ';
+
+    forecastWeather = forecastWeather.hourly;
+
+    var hourIncrement = new Date();
+    hourIncrement.setDate(hourIncrement.getDate());
+
+    const data = [];
+    for( var  i = 0 ; i < 24 ; i++){
+        data.push(
+            {
+                time: hourIncrement.getHours(),
+                temp: forecastWeather[i].temp,
+                tempString: forecastWeather[i].temp + '°'
+            }
+        );
+        hourIncrement.setHours(hourIncrement.getHours() + 1);
+    }
+    return (
+        <ResponsiveContainer>
+            <BarChart className="barChart"
+                width="100%"
+                height={250}
+                data={data}
+                margin={{
+                    top: 50, bottom: 5, right: 10, left: 10
+                }}
+                barCategoryGap={0}
+            >
+                <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#558cd3" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
+                    </linearGradient>
+                </defs>
+                <XAxis dataKey="time" stroke="gray" />
+                <Tooltip
+                    cursor={{ fill: '#2e2d2d' }}
+                    content={<CustomTooltip />}
+                />
+
+                {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
+                <Bar dataKey="temp" stackId={1} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
+                    <LabelList dataKey="tempString" position="top" offset={15} stroke="white" />
+                </Bar>
+            </BarChart>
+        </ResponsiveContainer>
+
+    )
+}
+
+export const graphBuilderPrecipitationWeekly = (forecastWeather) => {
     if (forecastWeather.daily === undefined) return ' ';
     forecastWeather = forecastWeather.daily;
 
@@ -164,7 +226,59 @@ export const graphBuilderPrecipitation = (forecastWeather) => {
     )
 }
 
-const ForecastChartContainer = ({ forecastWeather }) => {
+export const graphBuilderPrecipitationHourly = (forecastWeather) => {
+    if (forecastWeather.hourly === undefined) return ' ';
+
+    forecastWeather = forecastWeather.hourly;
+
+    var hourIncrement = new Date();
+    hourIncrement.setDate(hourIncrement.getDate());
+
+    const data = [];
+    for( var  i = 0 ; i < 24 ; i++){
+        data.push(
+            {
+                time: hourIncrement.getHours(),
+                temp: forecastWeather[i].temp
+            }
+        );
+        hourIncrement.setHours(hourIncrement.getHours() + 1);
+    }
+    return (
+        <ResponsiveContainer>
+            <BarChart className="barChart"
+                width="100%"
+                height={250}
+                data={data}
+                margin={{
+                    top: 50, bottom: 5, right: 10, left: 10
+                }}
+                barCategoryGap={0}
+            >
+                <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#558cd3" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
+                    </linearGradient>
+                </defs>
+                <XAxis dataKey="day" stroke="gray" />
+                <Tooltip
+                    cursor={{ fill: '#2e2d2d' }}
+                    content={<CustomTooltip />}
+                />
+
+                {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
+                <Bar dataKey="temp" stackId={1} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
+                    {/* <LabelList dataKey="pop_percent" position="top" offset={15} stroke="white" /> */}
+                </Bar>
+                <Bar dataKey="time" stackId={1} fill="#1A73E8" ></Bar>
+            </BarChart>
+        </ResponsiveContainer>
+
+    )
+}
+
+const ForecastChartContainer = (props) => {
     const [graphType, setGraphType] = useState("temp");
 
     const changeGraph = () => {
@@ -183,15 +297,22 @@ const ForecastChartContainer = ({ forecastWeather }) => {
     const { unitState } = useContext(Context);
     return (
         <div className={styles.forecast_graph} >
-            {graphType === "temp" ? graphBuilderTemperature(forecastWeather, unitState) : graphBuilderPrecipitation(forecastWeather)}
+            {graphType === "temp" 
+                ? props.type === 'weekly' 
+                    ? graphBuilderTemperatureWeekly(props.forecastWeather, unitState)
+                    : graphBuilderTemperatureHourly(props.forecastWeather, unitState)
+                : props.type === 'weekly' 
+                    ? graphBuilderPrecipitationWeekly(props.forecastWeather)
+                    : graphBuilderPrecipitationHourly(props.forecastWeather)
+            }
             <button className={changeIcon()} onClick={() => changeGraph()}></button>
         </div>
     )
 
 }
 
-ForecastChartContainer.propTypes = {
-    forecastWeather: PropTypes.object.isRequired,
-};
+// ForecastChartContainer.propTypes = {
+//     forecastWeather: PropTypes.object.isRequired,
+// };
 
 export default ForecastChartContainer;

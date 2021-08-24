@@ -52,7 +52,7 @@ const Page = ({ type }) => {
                         {/* the main contianer box + rectangle */}
                         <CurrentDayContainer weather={weather} />
                         <ForecastContainer {...propsForecast} />
-                        <ForecastChartContainer forecastWeather={forecastWeather} />
+                        <ForecastChartContainer {...propsForecast} />
                     </div>
                 ) : ('')}
             </main>
