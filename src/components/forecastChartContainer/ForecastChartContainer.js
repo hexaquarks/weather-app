@@ -40,8 +40,8 @@ function formatAMPM(date) {
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
-    return strTime;
+    var strTime = hours + " " + ampm;   
+     return strTime;
 }
 
 export const graphBuilderTemperatureWeekly = (forecastWeather, unitState) => {
@@ -120,9 +120,10 @@ export const graphBuilderTemperatureHourly = (forecastWeather, unitState) => {
     for (var i = 0; i < 24; i++) {
         data.push(
             {
-                time: hourIncrement.getHours(),
+                time: formatAMPM(hourIncrement),
                 temp: forecastWeather[i].temp,
-                tempString: forecastWeather[i].temp + '°'
+                tempString: forecastWeather[i].temp + '°',
+                top_rect: 2
             }
         );
         hourIncrement.setHours(hourIncrement.getHours() + 1);
@@ -140,7 +141,7 @@ export const graphBuilderTemperatureHourly = (forecastWeather, unitState) => {
         >
             <defs>
                 <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#558cd3" stopOpacity={0.3} />
+                    <stop offset="5%" stopColor="#c9af67" stopOpacity={0.3} />
                     <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
                 </linearGradient>
             </defs>
@@ -152,17 +153,10 @@ export const graphBuilderTemperatureHourly = (forecastWeather, unitState) => {
 
 
             {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
-            <Bar dataKey="temp" stackId={0} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
-                <LabelList dataKey="tempString" position="top" offset={15} stroke="white" />
+            <Bar dataKey="temp" stackId={1} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
+                <LabelList dataKey="tempString" position="top" offset={20} stroke="white" />
             </Bar>
-            {/* <Brush
-                    dataKey='time'
-                    height={20}
-                    stroke="#000000"
-                    startIndex={0}
-                    endIndex={10}
-                    travellerWidth={10}>
-                </Brush> */}
+            <Bar dataKey="top_rect" stackId={1} fill="#e8cc89" ></Bar>
         </BarChart>
 
     )
@@ -204,7 +198,7 @@ export const graphBuilderPrecipitationWeekly = (forecastWeather) => {
                 height={250}
                 data={data}
                 margin={{
-                    top: 50, bottom: 5, right: 10, left: 10
+                    top: 10, bottom: 5, right: 10, left: 10
                 }}
                 barCategoryGap={0}
             >
@@ -241,20 +235,21 @@ export const graphBuilderPrecipitationHourly = (forecastWeather) => {
     for (var i = 0; i < 24; i++) {
         data.push(
             {
-                time: hourIncrement.getHours(),
-                temp: forecastWeather[i].temp
+                time: formatAMPM(hourIncrement),
+                pop: Math.round(forecastWeather[i].pop * 100),
+                pop_percent: Math.round(forecastWeather[i].pop * 100) + '%',
+                top_rect: 4
             }
         );
         hourIncrement.setHours(hourIncrement.getHours() + 1);
     }
     return (
-        <ResponsiveContainer>
-            <BarChart className="barChart"
-                width={2000}
-                height={250}
+        <BarChart 
+                width={1500}
+                height={300}
                 data={data}
                 margin={{
-                    top: 50, bottom: 5, right: 10, left: 10
+                    top: 10, bottom: 60, right: 10, left: 10
                 }}
                 barCategoryGap={0}
             >
@@ -264,19 +259,18 @@ export const graphBuilderPrecipitationHourly = (forecastWeather) => {
                         <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
                     </linearGradient>
                 </defs>
-                <XAxis dataKey="day" stroke="gray" />
+                <XAxis dataKey="time" stroke="gray" height={30}/>
                 <Tooltip
                     cursor={{ fill: '#2e2d2d' }}
                     content={<CustomTooltip />}
                 />
 
                 {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
-                <Bar dataKey="temp" stackId={1} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
-                    {/* <LabelList dataKey="pop_percent" position="top" offset={15} stroke="white" /> */}
+                <Bar dataKey="pop" barSize={125} stackId={1} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
+                    <LabelList dataKey="pop_percent" position="top" offset={15} stroke="white" />
                 </Bar>
-                <Bar dataKey="time" stackId={1} fill="#1A73E8" ></Bar>
+                <Bar dataKey="top_rect" stackId={1} fill="#1A73E8" ></Bar>
             </BarChart>
-        </ResponsiveContainer>
 
     )
 }
@@ -300,6 +294,7 @@ const ForecastChartContainer = (props) => {
     const { unitState } = useContext(Context);
     return (
         <div className={styles.forecast_graph}>
+        <button className={changeIcon()} onClick={() => changeGraph()}></button>
             {props.type === 'hourly'
                 ? <div className={styles.forecast_slider}>
                     {graphType === "temp"
@@ -312,7 +307,6 @@ const ForecastChartContainer = (props) => {
                     : graphBuilderPrecipitationWeekly(props.forecastWeather)    
                 
             }
-            <button className={changeIcon()} onClick={() => changeGraph()}></button>
         </div>
     )
 
