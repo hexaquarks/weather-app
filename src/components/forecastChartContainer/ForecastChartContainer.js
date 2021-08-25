@@ -79,9 +79,8 @@ export const graphBuilderTemperatureWeekly = (forecastWeather, unitState) => {
         dayIncrement.setDate(dayIncrement.getDate() + 1);
     }
     return (
-        <ResponsiveContainer>
-            <BarChart className="barChart"
-                width="100%"
+            <BarChart 
+                width={500}
                 height={250}
                 data={data}
                 margin={{
@@ -106,8 +105,6 @@ export const graphBuilderTemperatureWeekly = (forecastWeather, unitState) => {
                     <LabelList dataKey="temp_max" position="bottom" offset={8} stroke="white" />
                 </Bar>
             </BarChart>
-        </ResponsiveContainer>
-
     )
 }
 
@@ -131,34 +128,34 @@ export const graphBuilderTemperatureHourly = (forecastWeather, unitState) => {
         hourIncrement.setHours(hourIncrement.getHours() + 1);
     }
     return (
-            <BarChart className="barChart"
-                width={1500}
-                height={300}
-                data={data}
-                margin={{
-                    top: 50, bottom: 60, right: 10, left: 10
-                }}
-                barCategoryGap={0}
-                
-            >
-                <defs>
-                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#558cd3" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
-                    </linearGradient>
-                </defs>
-                <XAxis dataKey="time" stroke="gray" />
-                {/* <Tooltip
+        <BarChart className="barChart"
+            width={1500}
+            height={300}
+            data={data}
+            margin={{
+                top: 50, bottom: 60, right: 10, left: 10
+            }}
+            barCategoryGap={0}
+
+        >
+            <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#558cd3" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.1} />
+                </linearGradient>
+            </defs>
+            <XAxis dataKey="time" stroke="gray" />
+            {/* <Tooltip
                     cursor={{ fill: '#2e2d2d' }}
                     content={<CustomTooltip unitState={unitState}/>}
                 /> */}
 
 
-                {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
-                <Bar dataKey="temp" stackId={0} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
-                    <LabelList dataKey="tempString" position="top" offset={15} stroke="white" />
-                </Bar>
-                {/* <Brush
+            {/* <Line type="monotone" dataKey="temp_min" stroke="red" /> */}
+            <Bar dataKey="temp" stackId={0} strokeWitdth={6} fillOpacity={1} fill="url(#colorUv)" >
+                <LabelList dataKey="tempString" position="top" offset={15} stroke="white" />
+            </Bar>
+            {/* <Brush
                     dataKey='time'
                     height={20}
                     stroke="#000000"
@@ -166,7 +163,7 @@ export const graphBuilderTemperatureHourly = (forecastWeather, unitState) => {
                     endIndex={10}
                     travellerWidth={10}>
                 </Brush> */}
-            </BarChart>
+        </BarChart>
 
     )
 }
@@ -202,9 +199,8 @@ export const graphBuilderPrecipitationWeekly = (forecastWeather) => {
     }
 
     return (
-        <ResponsiveContainer>
-            <BarChart className="barChart"
-                width="100%"
+            <BarChart 
+                width={500}
                 height={250}
                 data={data}
                 margin={{
@@ -230,7 +226,6 @@ export const graphBuilderPrecipitationWeekly = (forecastWeather) => {
                 </Bar>
                 <Bar dataKey="top_rect" stackId={1} fill="#1A73E8" ></Bar>
             </BarChart>
-        </ResponsiveContainer>
     )
 }
 
@@ -304,19 +299,21 @@ const ForecastChartContainer = (props) => {
 
     const { unitState } = useContext(Context);
     return (
-        <div className={styles.forecast_graph} >   
-        <div className={styles.forecast_graph_slider}>
-            {graphType === "temp"
-                ? props.type === 'weekly'
+        <div className={styles.forecast_graph}>
+            {props.type === 'hourly'
+                ? <div className={styles.forecast_slider}>
+                    {graphType === "temp"
+                        ? graphBuilderTemperatureHourly(props.forecastWeather, unitState)
+                        : graphBuilderPrecipitationHourly(props.forecastWeather)
+                    }
+                    </div>
+                : graphType === "temp"
                     ? graphBuilderTemperatureWeekly(props.forecastWeather, unitState)
-                    : graphBuilderTemperatureHourly(props.forecastWeather, unitState)
-                : props.type === 'weekly'
-                    ? graphBuilderPrecipitationWeekly(props.forecastWeather)
-                    : graphBuilderPrecipitationHourly(props.forecastWeather)
+                    : graphBuilderPrecipitationWeekly(props.forecastWeather)    
+                
             }
-            {/* <button className={changeIcon()} onClick={() => changeGraph()}></button> */}
+            <button className={changeIcon()} onClick={() => changeGraph()}></button>
         </div>
-        </div>             
     )
 
 }

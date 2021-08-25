@@ -1,6 +1,5 @@
 
 .forecast_graph {
-  position: relative;
     display:flex;
     width: 500px; 
     height: 250; 
@@ -12,7 +11,19 @@
     border-radius: 0px 0px 16px 16px;
   }
 
-  .forecast_graph_slider {
+
+.forecast_weekly_graph {
+  width: 500px; 
+  height: 250; 
+  background-color: #1F1F1F;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;  
+
+  border-radius: 0px 0px 16px 16px;
+}
+
+  .forecast_slider {
     background-color: #1F1F1F;
 
     width: 500px;
@@ -22,18 +33,7 @@
     float:right;
   }
 
-  .forecast_graph_2 {
-    display: flex;
-     width: 1000px;
-     /* overflow-x: scroll; */
-    height: 130px;
-  /* background-color: rgba(255,255,255,0.5); */
-  /* min-width: 500px;  */
-  /* flex-flow: row; */
-      margin-top: 10px;
-    align-items: center;
-    text-align: center;
-  }
+
   
   .forecast_graph::before {
     width: 500px;

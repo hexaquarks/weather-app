@@ -39,8 +39,8 @@ const ForecastContainer = (props) => {
             <div className={styles.forecast_slider}>
                 <div className={styles.forecast_container} style={{transform : `translateX(${xPos}px)`}}>
                     {props.type==='weekly' 
-                        ? forecastBuilderWeekly(props.forecastWeather, images)
-                        : forecastBuilderHourly(props.forecastWeather, images)
+                        ? forecastBuilderWeekly(props.forecastWeather, images, props.type)
+                        : forecastBuilderHourly(props.forecastWeather, images, props.type)
                     }
                 </div>
             </div>
@@ -52,10 +52,12 @@ const ForecastContainer = (props) => {
     )
 }
 
-const forecastBuilderWeekly = (forecastWeather, images) => {
+const forecastBuilderWeekly = (forecastWeather, images, type) => {
     if (forecastWeather.daily === undefined) return ' ';
 
     forecastWeather = forecastWeather.daily;
+    console.log(forecastWeather);
+    
     const forecastDaysClass = [
         'today', 'oneAfter',
         'twoAfter', 'threeAfter',
@@ -75,11 +77,11 @@ const forecastBuilderWeekly = (forecastWeather, images) => {
         dayIncrement.setDate(dayIncrement.getDate() + 1);
     }
 
-    return populateForecastElements(8, forecastDays, forecastWeather);
+    return populateForecastElements(8, forecastDays, forecastWeather, type);
 
 }
 
-const forecastBuilderHourly = (forecastWeather, images) => {
+const forecastBuilderHourly = (forecastWeather, images, type) => {
     if (forecastWeather.hourly === undefined) return ' ';
 
     
@@ -94,7 +96,7 @@ const forecastBuilderHourly = (forecastWeather, images) => {
         forecastHours.push(formatAMPM(hourIncrement));
     }
 
-    return populateForecastElements(24, forecastHours, forecastWeather);
+    return populateForecastElements(24, forecastHours, forecastWeather, type);
 }
 
 function formatAMPM(date) {
@@ -107,8 +109,8 @@ function formatAMPM(date) {
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
   }
-  
-  const populateForecastElements = (numberOfElements, forecastNamesList, forecastWeather) => {
+
+  const populateForecastElements = (numberOfElements, forecastNamesList, forecastWeather, type) => {
     const temp = [];
     for (var i = 0; i < numberOfElements; i++) {
         const altName = i+ "_icon";
@@ -116,7 +118,10 @@ function formatAMPM(date) {
             <div className={i}>
                 <p className="top_text">{forecastNamesList[i]}</p>
                 <img src={manageWeatherIcon(forecastWeather[i], images)} alt={altName}></img>
-                <p className="bottom_text">{Math.round(forecastWeather[i].temp)}°</p>
+                {type === 'weekly' 
+                    ? <p className="bottom_text">{Math.round(forecastWeather[i].temp.eve)}° / {Math.round(forecastWeather[i].temp.night)}°</p>
+                    : <p className="bottom_text">{Math.round(forecastWeather[i].temp)}°</p>
+                }
             </div>
         )
     }
