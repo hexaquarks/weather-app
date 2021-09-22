@@ -1,5 +1,6 @@
 import React from "react";
 import { scaleRotate as Menu } from "react-burger-menu";
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 // import styles from '../../components/sideMenu/SideMenu.module.css';
 
@@ -8,21 +9,21 @@ export default props => {
   return (
     // Pass on our props
       <Menu {...props} >
-        <a className="menu-item" href="/">
+        <Link className="menu-item" to="/">
           Home
-        </a>
+        </Link>
 
-        <a className="menu-item" href="/36HoursForecast">
+        <Link className="menu-item" to="/36HoursForecast">
           36 Hours Forecast
-        </a>
+        </Link>
 
-        <a className="menu-item" href="/7DaysForecast">
+        <Link className="menu-item" to="/7DaysForecast">
           7 Days Forecast
-        </a>
+        </Link>
 
-        <a className="menu-item" href="/about">
+        <Link className="menu-item" to="/about">
           About
-        </a>
+        </Link>
       </Menu>
   );
 };

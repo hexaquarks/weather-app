@@ -1,9 +1,8 @@
 
 import React, { useState } from 'react';
+
 import DataFetcher from '../../fetch_data.js';
-
 import SearchBox from '../searchBox/SearchBox'
-
 import LocationDetails from '../locationDetails/LocationDetails.js';
 import CurrentDayContainer from '../currentDayContainer/CurrentDayContainer.js';
 import ForecastContainer from '../forecastContainer/ForecastContainer.js';
