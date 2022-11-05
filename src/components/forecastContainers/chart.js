@@ -8,7 +8,7 @@ import triangle from '../../assets/triangle.png'
 import triangle_blue from "../../assets/triangle_blue.png"
 import { BarChart, Brush, Bar, XAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
 
-import styles from './ForecastChartContainer.module.css';
+import styles from './chart.module.css';
 
 const CustomTooltip = ({ active, payload, label, unitState }) => {
 
@@ -275,7 +275,7 @@ export const graphBuilderPrecipitationHourly = (forecastWeather) => {
     )
 }
 
-const ForecastChartContainer = (props) => {
+const Chart = (props) => {
     const [graphType, setGraphType] = useState("temp");
 
     const changeGraph = () => {
@@ -312,8 +312,8 @@ const ForecastChartContainer = (props) => {
 
 }
 
-// ForecastChartContainer.propTypes = {
+// Chart.propTypes = {
 //     forecastWeather: PropTypes.object.isRequired,
 // };
 
-export default ForecastChartContainer;
+export default Chart;

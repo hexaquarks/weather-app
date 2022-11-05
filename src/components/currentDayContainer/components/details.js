@@ -1,11 +1,11 @@
 
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
-import { Context } from '../Page/Page';
-import styles from './CurrentDayContainerDetails.module.css';
+import { Context } from '../../Page/Page';
+import styles from './details.module.css';
 
 
-const CurrentDayContainerDetails = ({ weather }) => {
+const Details = ({ weather }) => {
 
     const { unitState } = useContext(Context);
     console.log(unitState + " is ")
@@ -70,7 +70,6 @@ const rightColumnBuilder = (weather,unitState) => {
 }
 
 const timeParser = (weather) => {
-
     const sunrise = weather.sys.sunrise;
     const sunset = weather.sys.sunset;
 
@@ -86,9 +85,8 @@ const timeParser = (weather) => {
     ]
 }
 
-
-CurrentDayContainerDetails.propTypes = {
+Details.propTypes = {
     weather: PropTypes.object.isRequired,
 };
 
-export default CurrentDayContainerDetails;
+export default Details;

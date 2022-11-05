@@ -46,17 +46,17 @@
 }
 
 .weather_box.cold {
-    background-image: url('../../assets/cold.png');
+    background-image: url('../../../assets/cold.png');
     transition: 0.6s ease-out;
 }
 
 .weather_box.warm {
-    background-image: url('../../assets/warm.png');
+    background-image: url('../../../assets/warm.png');
     transition: 0.6s ease-out;
 }
 
 .weather_box.normal {
-    background-image: url('../../assets/normal.png');
+    background-image: url('../../../assets/normal.png');
     transition: 0.6s ease-out;
 }
 

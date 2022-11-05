@@ -3,7 +3,7 @@ import { manageWeatherIcon, dateBuilder } from '../../helper_functions.js';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-import styles from './ForecastContainer.module.css';
+import styles from './scrollableForecast.module.css';
 
 let type = '';
 const leftMax = (type) => {
@@ -15,7 +15,7 @@ const manageOpacity = (direction, xPos) => {
     else if(xPos<0 && xPos > -leftMax(type)) return 100;
     else if(xPos=== -leftMax(type)) return direction==='left' ? 100 : 25;
 }
-const ForecastContainer = (props) => {
+const ScrollableForecast = (props) => {
 
     type = props.type;
 
@@ -128,8 +128,8 @@ function formatAMPM(date) {
     return temp;
 }
 
-// ForecastContainer.propTypes = {
+// ScrollableForecast.propTypes = {
 //     weather: PropTypes.object.isRequired,
 // };
 
-export default ForecastContainer;
+export default ScrollableForecast;

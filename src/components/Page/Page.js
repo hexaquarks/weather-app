@@ -4,9 +4,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import DataFetcher from '../../fetch_data.js';
 import SearchBox from '../searchBox/SearchBox'
 import LocationDetails from '../locationDetails/LocationDetails.js';
-import CurrentDayContainer from '../currentDayContainer/CurrentDayContainer.js';
-import ForecastContainer from '../forecastContainer/ForecastContainer.js';
-import ForecastChartContainer from '../forecastChartContainer/ForecastChartContainer.js';
+import CurrentDayContainer from '../currentDayContainer/currentDayContainer.js';
+import ForecastContainer from '../forecastContainers/scrollableForecast.js';
+import ForecastChartContainer from '../forecastContainers/chart.js';
 
 
 export const Context = React.createContext({
@@ -31,7 +31,7 @@ const firstRenderCity = "Montreal"
 const Page = ({ type }) => {
     const { weather, forecastWeather, submitSearchRequest } = DataFetcher(type);
     const [temperatureUnit, setTemperatureUnit] = useState("°C");
-    const [currentCity, setCurrentCity] = useState("temp");
+    const [currentCity, setCurrentCity] = useState("");
 
     const onKeyPress = value => {
         submitSearchRequest(

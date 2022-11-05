@@ -1,10 +1,10 @@
-import { manageWeatherIcon } from "../../helper_functions.js";
-import images from '../../images.js';
+import { manageWeatherIcon } from "../../../helper_functions.js";
+import images from '../../../images.js';
 import PropTypes from 'prop-types';
 
-import { Context } from '../Page/Page';
+import { Context } from '../../Page/Page';
 import { useContext } from 'react';
-import styles from './CurrentDayContainerOverview.module.css';
+import styles from './overview.module.css';
 
 const manageBackgroundImage = (weather) => {
     if (typeof weather.main === 'undefined') return `${styles.weather_box} ${styles.normal}`;
@@ -15,7 +15,7 @@ const manageBackgroundImage = (weather) => {
     else if (temperature <= 0) return `${styles.weather_box} ${styles.cold}`;
 }
 
-const CurrentDayContainerOverview = ({ weather }) => {  
+const Overview = ({ weather }) => {  
     const { unitState, setUnitState } = useContext(Context); 
     const { currentCity } = useContext(Context);
     const { submitRequest } = useContext(Context);
@@ -33,9 +33,9 @@ const CurrentDayContainerOverview = ({ weather }) => {
                 <div className={styles.temp}>
                     {Math.round(weather.main.temp)}
                 </div>
-                <button class={styles.celsius} onClick={() => onClick(currentCity, "metric")}>°C</button>
+                <button className={styles.celsius} onClick={() => onClick(currentCity, "metric")}>°C</button>
                 <span id={styles.vertical_bar}>|</span>
-                <button class={styles.farenheit} onClick={() => submitRequest(currentCity, "imperial")}>°F</button>
+                <button className={styles.farenheit} onClick={() => submitRequest(currentCity, "imperial")}>°F</button>
             </div>
             <div className={styles.real_feel}>
                 <span>Feels Like {Math.round(weather.main.feels_like)} {unitState} </span>
@@ -46,8 +46,8 @@ const CurrentDayContainerOverview = ({ weather }) => {
     )
 }
 
-CurrentDayContainerOverview.propTypes = {
+Overview.propTypes = {
     weather: PropTypes.object.isRequired,
 };
 
-export default CurrentDayContainerOverview;
+export default Overview;
