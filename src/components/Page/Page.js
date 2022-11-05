@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import DataFetcher from '../../fetch_data.js';
 import SearchBox from '../searchBox/SearchBox'
@@ -9,29 +9,49 @@ import ForecastContainer from '../forecastContainer/ForecastContainer.js';
 import ForecastChartContainer from '../forecastChartContainer/ForecastChartContainer.js';
 
 
-export const Context = React.createContext(
-    {
-        unitState: "°C",
-        currentCity: "",
-        setCurrentCity: () => { },
-        setUnitState: () => { },
-        submitRequest: () => { }
-    });
+export const Context = React.createContext({
+    unitState: "°C",
+    currentCity: "",
+    setCurrentCity: () => { },
+    setUnitState: () => { },
+    submitRequest: () => { }
+});
+
+function useFirstRender() {
+    const firstRender = useRef(true);
+  
+    useEffect(() => {
+      firstRender.current = false;
+    }, []);
+  
+    return firstRender.current;
+}
 
 const Page = ({ type }) => {
 
     const { weather, forecastWeather, submitRequest } = DataFetcher(type);
     const [unitState, setUnitState] = useState("°C");
-    const [currentCity , setCurrentCity ] = useState("");
-
+    const [currentCity, setCurrentCity] = useState("temp");
+    
     const onKeyPress = value => {
-        (unitState==="°C" ) ? submitRequest(value, "metric") : submitRequest(value, "imperial");
+        submitRequest(
+            value, 
+            (unitState === "°C") ? "metric" : "imperial" 
+        )
         setCurrentCity(value);
     }
 
+    const firstRender = useFirstRender();
+
+    useEffect(() => {
+      if (firstRender) {
+        onKeyPress("Montreal")
+      }
+    }, [firstRender]);
+
     let propsForecast = {
         forecastWeather: forecastWeather,
-        type: type //or {props.type} ? 
+        type: type 
     }
     return (
         <Context.Provider value={{
@@ -41,9 +61,7 @@ const Page = ({ type }) => {
             setUnitState,
             submitRequest
         }}>
-
             <main>
-                {/* {manageSearchBox(search, cityName, setCityName)} */}
                 <SearchBox submitSearch={onKeyPress} />
                 {(typeof weather.main != "undefined") ? (
                     <div>
