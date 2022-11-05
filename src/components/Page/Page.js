@@ -10,33 +10,33 @@ import ForecastChartContainer from '../forecastChartContainer/ForecastChartConta
 
 
 export const Context = React.createContext({
-    unitState: "°C",
+    temperatureUnit: "°C",
     currentCity: "",
     setCurrentCity: () => { },
-    setUnitState: () => { },
-    submitRequest: () => { }
+    setTemperatureUnit: () => { },
+    submitSearchRequest: () => { }
 });
 
 function useFirstRender() {
     const firstRender = useRef(true);
-  
+
     useEffect(() => {
-      firstRender.current = false;
+        firstRender.current = false;
     }, []);
-  
+
     return firstRender.current;
 }
+const firstRenderCity = "Montreal"
 
 const Page = ({ type }) => {
-
-    const { weather, forecastWeather, submitRequest } = DataFetcher(type);
-    const [unitState, setUnitState] = useState("°C");
+    const { weather, forecastWeather, submitSearchRequest } = DataFetcher(type);
+    const [temperatureUnit, setTemperatureUnit] = useState("°C");
     const [currentCity, setCurrentCity] = useState("temp");
-    
+
     const onKeyPress = value => {
-        submitRequest(
-            value, 
-            (unitState === "°C") ? "metric" : "imperial" 
+        submitSearchRequest(
+            value,
+            (temperatureUnit === "°C") ? "metric" : "imperial"
         )
         setCurrentCity(value);
     }
@@ -44,34 +44,37 @@ const Page = ({ type }) => {
     const firstRender = useFirstRender();
 
     useEffect(() => {
-      if (firstRender) {
-        onKeyPress("Montreal")
-      }
+        if (firstRender) {
+            onKeyPress(firstRenderCity)
+        }
     }, [firstRender]);
 
     let propsForecast = {
         forecastWeather: forecastWeather,
-        type: type 
+        type: type
     }
     return (
         <Context.Provider value={{
-            unitState,
+            temperatureUnit,
             currentCity,
             setCurrentCity,
-            setUnitState,
-            submitRequest
+            setTemperatureUnit,
+            submitSearchRequest
         }}>
             <main>
-                <SearchBox submitSearch={onKeyPress} />
-                {(typeof weather.main != "undefined") ? (
-                    <div>
-                        <LocationDetails weather={weather} />
-                        {/* the main contianer box + rectangle */}
-                        <CurrentDayContainer weather={weather} />
-                        <ForecastContainer {...propsForecast} />
-                        <ForecastChartContainer {...propsForecast} />
-                    </div>
-                ) : ('')}
+                <SearchBox submitSearch={onKeyPress} /> {
+                    (weather.main !== undefined)
+                        ? (
+                            <div>
+                                <LocationDetails weather={weather} />
+                                {/* the main contianer box + rectangle */}
+                                <CurrentDayContainer weather={weather} />
+                                <ForecastContainer {...propsForecast} />
+                                <ForecastChartContainer {...propsForecast} />
+                            </div>
+                        )
+                        : ('')
+                }
             </main>
         </Context.Provider>
     );

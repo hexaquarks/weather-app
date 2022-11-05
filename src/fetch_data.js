@@ -15,7 +15,7 @@ const DataFetcher= (type) => {
     const excludesHourly = "current,minutely,daily,alerts";
 
 
-    const submitRequest = (cityName, unit) => {
+    const submitSearchRequest = (cityName, unit) => {
 
             fetch(`${api.base}weather?q=${cityName}&units=${unit}&APPID=${api.key}`)
                 .then(response => response.json())
@@ -46,7 +46,7 @@ const DataFetcher= (type) => {
         
     }
 
-    return { weather, forecastWeather, submitRequest };
+    return { weather, forecastWeather, submitSearchRequest };
 };
 
 export default DataFetcher;
