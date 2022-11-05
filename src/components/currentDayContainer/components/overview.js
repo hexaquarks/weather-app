@@ -2,7 +2,7 @@ import { manageWeatherIcon } from "../../../helper_functions.js";
 import images from '../../../images.js';
 import PropTypes from 'prop-types';
 
-import { Context } from '../../Page/Page';
+import { Context } from '../../page/page';
 import { useContext } from 'react';
 import styles from './overview.module.css';
 

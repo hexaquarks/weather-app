@@ -1,7 +1,7 @@
 
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
-import { Context } from '../../Page/Page';
+import { Context } from '../../page/page';
 import styles from './details.module.css';
 
 

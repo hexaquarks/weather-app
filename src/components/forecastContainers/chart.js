@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { dateBuilder } from '../../helper_functions.js';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
-import { Context } from '../Page/Page';
+import { Context } from '../page/page';
 
 import triangle from '../../assets/triangle.png'
 import triangle_blue from "../../assets/triangle_blue.png"
