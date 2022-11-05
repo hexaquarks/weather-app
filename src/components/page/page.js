@@ -5,8 +5,8 @@ import DataFetcher from '../../fetch_data.js';
 import SearchBox from '../searchBox/searchBox'
 import LocationDetails from '../locationDetails/locationDetails.js';
 import CurrentDayContainer from '../currentDayContainer/currentDayContainer.js';
-import ForecastContainer from '../forecastContainers/scrollableForecast.js';
-import ForecastChartContainer from '../forecastContainers/chart.js';
+import ScrollableForecast from '../forecastContainers/scrollableForecast.js';
+import Chart from '../forecastContainers/chart.js';
 
 
 export const Context = React.createContext({
@@ -69,8 +69,8 @@ const Page = ({ type }) => {
                                 <LocationDetails weather={weather} />
                                 {/* the main contianer box + rectangle */}
                                 <CurrentDayContainer weather={weather} />
-                                <ForecastContainer {...propsForecast} />
-                                <ForecastChartContainer {...propsForecast} />
+                                <ScrollableForecast {...propsForecast} />
+                                <Chart {...propsForecast} />
                             </div>
                         )
                         : ('')

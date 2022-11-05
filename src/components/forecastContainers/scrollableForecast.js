@@ -1,7 +1,9 @@
-import images from '../../images.js';
-import { manageWeatherIcon, dateBuilder } from '../../helper_functions.js';
-import PropTypes from 'prop-types';
-import { useState } from 'react';
+import images from '../../images.js'
+import { manageWeatherIcon, dateBuilder } from '../../helper_functions.js'
+import PropTypes from 'prop-types'
+import { useState } from 'react'
+import { Context } from '../page/page'
+import { useContext } from 'react'
 
 import styles from './scrollableForecast.module.css';
 
@@ -20,6 +22,7 @@ const ScrollableForecast = (props) => {
     type = props.type;
 
     const [ xPos, setXPos ] = useState(0);
+    const { temperatureUnit, setTemperatureUnit } = useContext(Context); 
 
     // const [style, setStyle] = useState({ transform: `translateX(${xPos}px)` });
     const onClick = (direction) => {
@@ -39,8 +42,8 @@ const ScrollableForecast = (props) => {
             <div className={styles.forecast_slider}>
                 <div className={styles.forecast_container} style={{transform : `translateX(${xPos}px)`}}>
                     {props.type==='weekly' 
-                        ? forecastBuilderWeekly(props.forecastWeather, images, props.type)
-                        : forecastBuilderHourly(props.forecastWeather, images, props.type)
+                        ? forecastBuilderWeekly(props.forecastWeather, images, props.type, temperatureUnit)
+                        : forecastBuilderHourly(props.forecastWeather, images, props.type, temperatureUnit)
                     }
                 </div>
             </div>
@@ -52,7 +55,7 @@ const ScrollableForecast = (props) => {
     )
 }
 
-const forecastBuilderWeekly = (forecastWeather, images, type) => {
+const forecastBuilderWeekly = (forecastWeather, images, type, temperatureUnit) => {
     if (forecastWeather.daily === undefined) return ' ';
 
     forecastWeather = forecastWeather.daily;
@@ -77,13 +80,11 @@ const forecastBuilderWeekly = (forecastWeather, images, type) => {
         dayIncrement.setDate(dayIncrement.getDate() + 1);
     }
 
-    return populateForecastElements(8, forecastDays, forecastWeather, type);
-
+    return populateForecastElements(8, forecastDays, forecastWeather, type, temperatureUnit);
 }
 
-const forecastBuilderHourly = (forecastWeather, images, type) => {
+const forecastBuilderHourly = (forecastWeather, images, type, temperatureUnit) => {
     if (forecastWeather.hourly === undefined) return ' ';
-
     
     forecastWeather = forecastWeather.hourly;
     const forecastHours = [];
@@ -96,7 +97,7 @@ const forecastBuilderHourly = (forecastWeather, images, type) => {
         forecastHours.push(formatAMPM(hourIncrement));
     }
 
-    return populateForecastElements(24, forecastHours, forecastWeather, type);
+    return populateForecastElements(24, forecastHours, forecastWeather, type, temperatureUnit);
 }
 
 function formatAMPM(date) {
@@ -110,7 +111,7 @@ function formatAMPM(date) {
     return strTime;
   }
 
-  const populateForecastElements = (numberOfElements, forecastNamesList, forecastWeather, type) => {
+  const populateForecastElements = (numberOfElements, forecastNamesList, forecastWeather, type, temperatureUnit) => {
     const temp = [];
     for (var i = 0; i < numberOfElements; i++) {
         const altName = i+ "_icon";
@@ -119,8 +120,8 @@ function formatAMPM(date) {
                 <p className="top_text">{forecastNamesList[i]}</p>
                 <img src={manageWeatherIcon(forecastWeather[i], images)} alt={altName}></img>
                 {type === 'weekly' 
-                    ? <p className="bottom_text">{Math.round(forecastWeather[i].temp.eve)}° / {Math.round(forecastWeather[i].temp.night)}°</p>
-                    : <p className="bottom_text">{Math.round(forecastWeather[i].temp)}°</p>
+                    ? <p className="bottom_text">{Math.round(forecastWeather[i].temp.eve)} / {Math.round(forecastWeather[i].temp.night)} {(temperatureUnit)}</p>
+                    : <p className="bottom_text">{Math.round(forecastWeather[i].temp)} {temperatureUnit} </p>
                 }
             </div>
         )
