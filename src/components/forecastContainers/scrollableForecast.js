@@ -1,35 +1,41 @@
-import images from '../../images.js'
 import { manageWeatherIcon, dateBuilder } from '../../helper_functions.js'
-import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { Context } from '../page/page'
 import { useContext } from 'react'
+import images from '../../images.js'
 
 import styles from './scrollableForecast.module.css';
 
-let type = '';
-const leftMax = (type) => {
-    return (type === 'weekly') ? 300 : 900;
+const N_FORECAST_ELEMENTS_WEEKLY = 8
+const N_FORECAST_ELEMENTS_DAILY = 24
+const LOW_OPACITY_PERCENTAGE = 25
+const HIGH_OPACITY_PERCENTAGE = 100
+const SHIFT_VALUE = 100
+const WEEKLY_SCROLLPANE_WIDTH = 900
+const DAILY_SCROLLPANE_WIDTH = 300
+
+let forecastType = '';
+const leftMax = (forecastType) => {
+    return (forecastType === 'weekly') ? DAILY_SCROLLPANE_WIDTH : WEEKLY_SCROLLPANE_WIDTH;
 }
 
 const manageOpacity = (direction, xPos) => {
-    if(xPos===0) return direction==='left' ? 25 : 100;
-    else if(xPos<0 && xPos > -leftMax(type)) return 100;
-    else if(xPos=== -leftMax(type)) return direction==='left' ? 100 : 25;
+    if (xPos === 0) return direction === 'left' ? LOW_OPACITY_PERCENTAGE : HIGH_OPACITY_PERCENTAGE;
+    else if (xPos < 0 && xPos > -leftMax(forecastType)) return HIGH_OPACITY_PERCENTAGE;
+    else if (xPos === -leftMax(forecastType)) return direction==='left' ? HIGH_OPACITY_PERCENTAGE : LOW_OPACITY_PERCENTAGE;
 }
+
 const ScrollableForecast = (props) => {
+    forecastType = props.type;
 
-    type = props.type;
-
-    const [ xPos, setXPos ] = useState(0);
     const { temperatureUnit, setTemperatureUnit } = useContext(Context); 
+    const [ xPos, setXPos ] = useState(0);
 
-    // const [style, setStyle] = useState({ transform: `translateX(${xPos}px)` });
     const onClick = (direction) => {
-        if(direction === 'left'){
-            xPos === -leftMax(type) ? setXPos(xPos) : setXPos(xPos-100);
-        }else{
-            xPos === 0 ? setXPos(xPos) : setXPos(xPos+100);
+        if (direction === 'left') {
+            xPos === -leftMax(forecastType) ? setXPos(xPos) : setXPos(xPos - SHIFT_VALUE);
+        } else {
+            xPos === 0 ? setXPos(xPos) : setXPos(xPos + SHIFT_VALUE);
         }
     }
 
@@ -42,8 +48,8 @@ const ScrollableForecast = (props) => {
             <div className={styles.forecast_slider}>
                 <div className={styles.forecast_container} style={{transform : `translateX(${xPos}px)`}}>
                     {props.type==='weekly' 
-                        ? forecastBuilderWeekly(props.forecastWeather, images, props.type, temperatureUnit)
-                        : forecastBuilderHourly(props.forecastWeather, images, props.type, temperatureUnit)
+                        ? forecastBuilderWeekly(props.forecastWeather, props.type, temperatureUnit)
+                        : forecastBuilderHourly(props.forecastWeather, props.type, temperatureUnit)
                     }
                 </div>
             </div>
@@ -55,35 +61,26 @@ const ScrollableForecast = (props) => {
     )
 }
 
-const forecastBuilderWeekly = (forecastWeather, images, type, temperatureUnit) => {
+const forecastBuilderWeekly = (forecastWeather, forecastType, temperatureUnit) => {
     if (forecastWeather.daily === undefined) return ' ';
 
-    forecastWeather = forecastWeather.daily;
-    console.log(forecastWeather);
-    
-    const forecastDaysClass = [
-        'today', 'oneAfter',
-        'twoAfter', 'threeAfter',
-        'fourAfter', 'fiveAfter', 'sixAfter', 'sevenAfter',     
-        'eightAfter'
-    ];
-
+    forecastWeather = forecastWeather.daily;    
     const forecastDays = ['Today'];
 
     var dayIncrement = new Date();
     dayIncrement.setDate(dayIncrement.getDate() + 1);
 
-    for (var i = 1; i < 8; i++) {
+    for (var i = 1; i < N_FORECAST_ELEMENTS_WEEKLY; i++) {
         forecastDays.push(dateBuilder(dayIncrement).substr(
             0, dateBuilder(dayIncrement).indexOf(' '))
         );
         dayIncrement.setDate(dayIncrement.getDate() + 1);
     }
 
-    return populateForecastElements(8, forecastDays, forecastWeather, type, temperatureUnit);
+    return populateForecastElements(N_FORECAST_ELEMENTS_WEEKLY, forecastDays, forecastWeather, forecastType, temperatureUnit);
 }
 
-const forecastBuilderHourly = (forecastWeather, images, type, temperatureUnit) => {
+const forecastBuilderHourly = (forecastWeather, forecastType, temperatureUnit) => {
     if (forecastWeather.hourly === undefined) return ' ';
     
     forecastWeather = forecastWeather.hourly;
@@ -92,15 +89,15 @@ const forecastBuilderHourly = (forecastWeather, images, type, temperatureUnit) =
     var hourIncrement = new Date();
     hourIncrement.setDate(hourIncrement.getDate());
 
-    for (var i = 0; i < 24; i++) {
+    for (var i = 0; i < N_FORECAST_ELEMENTS_DAILY; i++) {
         hourIncrement.setHours(hourIncrement.getHours() + 1);
         forecastHours.push(formatAMPM(hourIncrement));
     }
 
-    return populateForecastElements(24, forecastHours, forecastWeather, type, temperatureUnit);
+    return populateForecastElements(N_FORECAST_ELEMENTS_DAILY, forecastHours, forecastWeather, forecastType, temperatureUnit);
 }
 
-function formatAMPM(date) {
+const formatAMPM = (date) => {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
@@ -109,24 +106,24 @@ function formatAMPM(date) {
     minutes = minutes < 10 ? '0'+minutes : minutes;
     var strTime = hours + " " + ampm;
     return strTime;
-  }
+}
 
-  const populateForecastElements = (numberOfElements, forecastNamesList, forecastWeather, type, temperatureUnit) => {
-    const temp = [];
+const populateForecastElements = (numberOfElements, forecastNamesList, forecastWeather, type, temperatureUnit) => {
+    const elements = [];
     for (var i = 0; i < numberOfElements; i++) {
         const altName = i+ "_icon";
-        temp.push(
+        elements.push(
             <div className={i}>
                 <p className="top_text">{forecastNamesList[i]}</p>
                 <img src={manageWeatherIcon(forecastWeather[i], images)} alt={altName}></img>
-                {type === 'weekly' 
+                {forecastType === 'weekly' 
                     ? <p className="bottom_text">{Math.round(forecastWeather[i].temp.eve)} / {Math.round(forecastWeather[i].temp.night)} {(temperatureUnit)}</p>
                     : <p className="bottom_text">{Math.round(forecastWeather[i].temp)} {temperatureUnit} </p>
                 }
             </div>
         )
     }
-    return temp;
+    return elements;
 }
 
 // ScrollableForecast.propTypes = {
