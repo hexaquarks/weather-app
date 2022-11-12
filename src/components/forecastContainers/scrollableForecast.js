@@ -110,6 +110,7 @@ const formatAMPM = (date) => {
 
 const populateForecastElements = (numberOfElements, forecastNamesList, forecastWeather, type, temperatureUnit) => {
     const elements = [];
+    console.log(temperatureUnit)
     for (var i = 0; i < numberOfElements; i++) {
         const altName = i+ "_icon";
         elements.push(

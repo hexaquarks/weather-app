@@ -1,14 +1,12 @@
 
-import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { Context } from '../../page/page';
+import PropTypes from 'prop-types';
 import styles from './details.module.css';
 
-
 const Details = ({ weather }) => {
+    const { temperatureUnit, setTemperatureUnit } = useContext(Context); 
 
-    const { unitState } = useContext(Context);
-    console.log(unitState + " is ")
     return (
         <div className={styles.weather_information}>
             <div className={styles.left_column}>
@@ -19,7 +17,7 @@ const Details = ({ weather }) => {
             </div>
             <div className={styles.right_column}>
                 <tr>
-                    {rightColumnBuilder(weather, unitState)}
+                    {rightColumnBuilder(weather, temperatureUnit)}
                 </tr>
             </div>
         </div>
@@ -47,19 +45,17 @@ const leftColumnBuilder = () => {
     )
 }
 
-const rightColumnBuilder = (weather,unitState) => {
-
-
+const rightColumnBuilder = (weather,temperatureUnit) => {
     return (
         <table>
             <tbody>
-                <tr>{weather.wind.speed} {unitState==="°C" ? "km/h" : "mph"}</tr>
+                <tr>{weather.wind.speed} {temperatureUnit==="°C" ? "km/h" : "mph"}</tr>
                 <tr>{weather.main.pressure / 100.} kPa </tr>
                 <tr>{weather.main.humidity} %</tr>
                 <tr>{weather.visibility / 1000} Km</tr>
                 <tr><td><br /></td></tr>
-                <tr>{weather.main.temp_max.toFixed(0)} {unitState} </tr>
-                <tr>{weather.main.temp_min.toFixed(0)} {unitState}</tr>
+                <tr>{weather.main.temp_max.toFixed(0)} {temperatureUnit} </tr>
+                <tr>{weather.main.temp_min.toFixed(0)} {temperatureUnit}</tr>
                 <tr><td><br /></td></tr>
                 <tr>{timeParser(weather)[0].slice(0, timeParser(weather)[0].length - 8) + " " + timeParser(weather)[0].slice(timeParser(weather)[0].length - 4, timeParser(weather)[0].length)}</tr>
                 <tr>{timeParser(weather)[1].slice(0, timeParser(weather)[1].length - 8) + " " + timeParser(weather)[1].slice(timeParser(weather)[1].length - 4, timeParser(weather)[1].length)}</tr>
