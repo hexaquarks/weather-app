@@ -26,7 +26,6 @@ const Overview = ({ weather }) => {
         (unit === "metric") ? setTemperatureUnit("°C") : setTemperatureUnit("°F");
     }
 
-    console.log("-----: " + currentCity);
     return (
         <div className={manageBackgroundImage(weather)}>
             <div className={styles.top}>
@@ -35,7 +34,7 @@ const Overview = ({ weather }) => {
                 </div>
                 <button className={styles.celsius} onClick={() => onClick(currentCity, "metric")}>°C</button>
                 <span id={styles.vertical_bar}>|</span>
-                <button className={styles.farenheit} onClick={() => submitSearchRequest(currentCity, "imperial")}>°F</button>
+                <button className={styles.farenheit} onClick={() => onClick(currentCity, "imperial")}>°F</button>
             </div>
             <div className={styles.real_feel}>
                 <span>Feels Like {Math.round(weather.main.feels_like)} {temperatureUnit} </span>
