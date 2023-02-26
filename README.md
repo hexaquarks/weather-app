@@ -25,5 +25,5 @@ Simple weather application with data fetched from [Openweathermap.org API](https
 
 ## 💡 Current State Example
 <p align="center">
-   <img src="https://github.com/hexaquarks/Weather_App/blob/master/src/assets/Promotion/weatherAppGif.gif" width="400" />
+   <img src="https://github.com/hexaquarks/weather-app/blob/master/src/assets/Promotion/weatherAppGif.gif" width="400" />
 </p>
