@@ -1,5 +1,5 @@
 # 🌥️ Weather Application 
-Simple weather application with data fetched from [Openweathermap.org API](https://openweathermap.org/current). The deployment is available [here](https://hexaquarks.github.io/Weather_App/).
+Simple weather application with data fetched from [Openweathermap.org API](https://openweathermap.org/current). The deployment is available [here](https://hexaquarks.github.io/weather-app/).
 
 ## 🧰 Technologies
 <div align="center" markdown="1">
